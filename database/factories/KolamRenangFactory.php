@@ -18,8 +18,8 @@ class KolamRenangFactory extends Factory
     {
         return [
             'nama' => $this->faker->word,
-            'deskripsi' => $this->faker->paragraph(nbSentences:1, variableNbSentences: true),
-            'alamat' => $this->faker->address,
+            'deskripsi' => $this->faker->paragraph(nbSentences: 1, variableNbSentences: true),
+            'lokasi' => $this->faker->address,
             'klasifikasi' => $this->faker->word,
             'gambar' => $this->faker->imageUrl(640, 480),
             'harga' => $this->faker->randomFloat(2, 10000, 100000),

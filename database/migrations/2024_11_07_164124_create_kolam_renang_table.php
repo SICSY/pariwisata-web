@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,12 +13,11 @@ return new class extends Migration
         Schema::create('kolam_renang', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('deskripsi');
-            $table->string('alamat');
-            $table->string('klasifikasi');
-            $table->string('gambar');
-            $table->float('harga');
-            $table->float('rating');
+            $table->enum('klasifikasi', [0, 1, 2, 3, 4, 5], );
+            $table->json('harga');
+            $table->text('gambar');
+            $table->text('deskripsi')->nullable();
+            $table->string('lokasi');
             $table->timestamps();
         });
     }

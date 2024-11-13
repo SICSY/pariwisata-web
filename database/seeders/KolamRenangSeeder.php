@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Hotel;
+
+use App\Models\KolamRenang;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,6 @@ class KolamRenangSeeder extends Seeder
      */
     public function run(): void
     {
-        Hotel::factory()->count(10)->create();
+        KolamRenang::factory()->count(10)->create();
     }
 }

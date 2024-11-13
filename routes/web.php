@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DataManagemenController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HotelController;
+use App\Http\Controllers\KolamRenangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 
@@ -51,6 +54,10 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function () {
     Route::get('admin/data/kolam-renang', action: [AdminController::class, 'dataKolamRenang'])->name('admin.kolam-renang');
     Route::get('admin/data/konten-view', [AdminController::class, 'dataKontenView'])->name('admin.konten-view');
     Route::get('admin/data/pengujung', [AdminController::class, 'dataPengunjung'])->name('admin.pengunjung');
+    Route::resource('data-managemen', DataManagemenController::class);
+    Route::resource('hotel', HotelController::class);
+    Route::resource('kolamRenang', KolamRenangController::class);
+
 
 });
 

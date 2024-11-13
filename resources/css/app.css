@@ -9,14 +9,24 @@ body {
     padding: 0;
     left: 0;
     top: 0;
-
+    -webkit-font-smoothing: antialiased; /* Untuk browser berbasis Webkit seperti Chrome */
+    -moz-osx-font-smoothing: grayscale; /* Untuk Firefox */
+    text-rendering: optimizeLegibility; /* Mengoptimalkan tampilan teks */
     box-sizing: border-box;
 }
 
 #btn-explore:hover ~ #foto-kanan,
 #btn-explore:hover ~ #foto-kiri {
-  filter: grayscale(100%);
+    filter: grayscale(100%);
 }
-
-
-
+.chart-container {
+    width: 50vw;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: drop-shadow(0 0 20px rgba(0, 255, 255, 1)); */
+}
+* {
+    box-sizing: border-box;
+}

@@ -14,19 +14,20 @@ class Hotel extends Model
     protected $fillable = [
         'nama',
         'klasifikasi',
+        'harga',
+        'gambar',
         'kapasitas_kamar',
         'deskripsi',
-        'gambar',
         'lokasi',
-        'rating',
-        'harga',
+
     ];
     public function kontenViews()
     {
         return $this->hasMany(KontenView::class, 'hotel_id');
     }
-    public function data_pengunjung(){
-        return $this->hasMany(DataPengunjung::class);
+    public function data_pengunjung()
+    {
+        return $this->hasMany(DataPengunjungHotel::class);
     }
 
 }

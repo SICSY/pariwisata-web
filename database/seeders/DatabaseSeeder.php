@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            HotelSeeder::class,
-            KolamRenangSeeder::class,
-            ViewSeeder::class,
-            KontenViewSeeder::class,
-            PengunjungSeeder::class,
-
+                // HotelSeeder::class,
+                // KolamRenangSeeder::class,
+                // ViewSeeder::class,
+                // KontenViewSeeder::class,
+                // PengunjungHotelSeeder::class,
+                // PengunjungKolamRenangSeeder::class,
             UserSeeder::class,
         ]);
     }

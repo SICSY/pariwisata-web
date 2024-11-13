@@ -1,33 +1,56 @@
-import React from "react";
+import FooterMobile from "@/Components/FooterMobile";
+import IconHome from "@/Components/icon/IconHome";
+import IconProfil from "@/Components/icon/IconProfil";
+import IconSetting from "@/Components/icon/IconSetting";
+import SideBar from "@/Components/SideBar";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, usePage } from "@inertiajs/react";
 
-const Pengunjung = ({ data }) => {
-  return (
-    <div className="text-white border">
-      <h1>Daftar Pengunjung</h1>
-      <table className="table-auto w-full text-left border-collapse">
-        <thead>
-          <tr>
-            <th className="border px-4 py-2">Waktu Kunjungan</th>
-            <th className="border px-4 py-2">Total Pengunjung</th>
-            <th className="border px-4 py-2">Role</th>
-            <th className="border px-4 py-2">Hotel</th>
-            <th className="border px-4 py-2">Kolam Renang</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((pengunjung, index) => (
-            <tr key={index} className="border-t">
-              <td className="border px-4 py-2">{pengunjung.format_waktu_kunjungan}</td>
-              <td className="border px-4 py-2">{pengunjung.total_pengunjung}</td>
-              <td className="border px-4 py-2">{pengunjung.role}</td>
-              <td className="border px-4 py-2">{pengunjung.hotel?.nama || ''}</td>
-              <td className="border px-4 py-2">{pengunjung.kolam_renang?.nama || ''}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+import KontenView from "./data/Kontenview";
+import Pengunjung from "./data/Pengunjung";
 
-export default Pengunjung;
+export default function Data() {
+    const { props } = usePage();
+    const data = props.data;
+
+    const links = [
+        {
+            text: "Setting",
+            url: "/",
+            icon: IconSetting, // Absolute path
+        },
+        {
+            text: "Home",
+            url: "/",
+            icon: IconHome, // Absolute path
+        },
+        {
+            text: "Profil",
+            url: "/",
+            icon: IconProfil, // Absolute path
+        },
+    ];
+
+    return (
+        <main className="box-border w-full h-screen overflow-hidden">
+            <div className="flex flex-col sm:flex-row">
+                {/* Sidebar for Desktop */}
+                <div className="hidden sm:block sm:w-64 bg-gray-900 text-white shadow-lg">
+                    <SideBar />
+                </div>
+
+                {/* Main Content */}
+                <div className="flex-1 bg-gray-900  overflow-auto">
+                    <AuthenticatedLayout>
+                        <Head title="Data" />
+                    </AuthenticatedLayout>
+
+                    <Pengunjung data={data} />
+                </div>
+            </div>
+
+            {/* FooterMobile for Small Screens */}
+            <FooterMobile links={links} />
+        </main>
+    );
+}

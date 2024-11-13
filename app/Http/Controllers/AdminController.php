@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataPengunjung;
+use App\Models\DataPengunjungHotel;
 use App\Models\Hotel;
 use App\Models\KolamRenang;
 use App\Models\KontenView;
@@ -15,11 +16,24 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $data = KontenView::all();
-        return Inertia::render('Admin/Dashboard', [
-            'data' => $data
-        ]);
+        $totalPengunjungHotel = DataPengunjungHotel::whereNotNull('hotel_id')
+            ->whereNotNull('total_pengunjung')
+            ->sum('total_pengunjung');
+
+        $pengunjungData = DataPengunjungHotel::with('hotel:id,nama')
+            ->select('role', 'total_pengunjung', 'hotel_id')
+            ->whereNotNull('hotel_id')
+            ->get();
+
+        return Inertia::render(
+            'Admin/Dashboard',
+            [
+                'totalPengunjungHotel' => $totalPengunjungHotel,
+                'tabel' => $pengunjungData
+            ]
+        );
     }
+
 
 
     public function dataHotel()
@@ -50,7 +64,7 @@ class AdminController extends Controller
 
     public function dataPengunjung()
     {
-        $pengunjung = DataPengunjung::with(['hotel', 'kolam_renang'])->get();
+        $pengunjung = DataPengunjungHotel::with('hotel')->get();
 
 
         return Inertia::render('Admin/Pengunjung', [

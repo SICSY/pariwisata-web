@@ -12,18 +12,20 @@ class KolamRenang extends Model
 
     protected $fillable = [
         'nama',
-        'deskripsi',
-        'alamat',
         'klasifikasi',
-        'gambar',
         'harga',
-        'rating',
+        'deskripsi',
+        'lokasi',
+        'gambar',
+
+
     ];
     public function kontenViews()
     {
         return $this->hasMany(KontenView::class, 'kolam_renang_id');
     }
-    public function data_pengunjung(){
-        return $this->hasMany(DataPengunjung::class);
+    public function data_pengunjung()
+    {
+        return $this->hasMany(DataPengunjungKolamRenang::class);
     }
 }

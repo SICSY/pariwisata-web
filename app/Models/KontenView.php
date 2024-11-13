@@ -9,7 +9,7 @@ class KontenView extends Model
 {
     use HasFactory;
 
-    protected $table = 'konten_views';
+    protected $table = 'konten_view';
 
     protected $fillable = [
         'user_id',
@@ -21,7 +21,7 @@ class KontenView extends Model
     // Relasi ke User
     public function user()
     {
-        return $this->belongsTo(User::class , 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Relasi ke Hotel

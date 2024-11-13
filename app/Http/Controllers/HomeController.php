@@ -14,8 +14,7 @@ class HomeController extends Controller{
     public function dataIndex()
     {
         // Ambil data hotel
-        $hotel = Hotel::where('id', 1)->first();  // Atau Hotel::all() jika ingin semua hotel
-
+        $hotel = Hotel::where('id', 1)->first();  
 
         // Ambil data lainnya
         $kontenView = KontenView::where('id', 1)->first();

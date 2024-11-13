@@ -17,9 +17,26 @@ export default {
                 roboto: ["Roboto Condensed", 'sans-serif']
 
             },
+            textColor: {
+                'primary': '#ff6a00', // Example primary color
+              },
         },
     },
 
 
-    plugins: [forms],
+    plugins: [forms,
+        function ({ addUtilities }) {
+            addUtilities({
+              '.text-stroke': {
+                'font-family' : 'poppins, sans-serif',
+                '-webkit-text-stroke': '1px #0c0c2f', // Customize stroke width and color
+                'color': 'transparent',
+              },
+              '.text-stroke-2': {
+                '-webkit-text-stroke': '2px #0c0c2f', // Example for a thicker stroke
+                'color': 'transparent',
+              },
+            }, ['responsive', 'hover']);
+          },
+    ],
 };
