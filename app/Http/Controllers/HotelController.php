@@ -3,132 +3,128 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+
 
 class HotelController extends Controller
 {
-    // Display a listing of hotels
-    public function index()
-    {
-        $hotels = Hotel::all(); // Get all hotels from the database
-        return view('Admin/Hotel', compact('hotels')); // Return the index view with hotels data
-    }
 
-    // Show the form for creating a new hotel
-    public function create()
+    public function store(Request $request): RedirectResponse
     {
-        return view('hotels.create'); // Return the form for creating a hotel
-    }
 
-    // Store a newly created hotel in storage
-    public function store(Request $request)
-    {
-        // Validate the request data
-        $validated = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255',
             'klasifikasi' => 'required|integer',
-            'harga' => 'required|numeric',
+            'harga' => 'required|array',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'nullable|string',
             'lokasi' => 'nullable|string',
-            'kapasitas_kamar' => 'nullable|integer',
-            'min_harga' => 'nullable|numeric',
-            'max_harga' => 'nullable|numeric',
+            'kapasitas_kamar' => 'required|integer',
         ]);
 
-        // Handle the file upload
-        if ($request->hasFile('gambar')) {
-            // Store the image in the 'public' disk (storage/app/public)
-            $gambarPath = $request->file('gambar')->store('images/hotel', 'public');
-        } else {
-            $gambarPath = null; // No image uploaded
+        // Mengecek apakah hotel dengan nama yang sama sudah ada
+        $existingHotel = Hotel::where('nama', $request->nama)->first();
+        if ($existingHotel) {
+            // Jika hotel sudah ada, kembalikan pesan error
+            return redirect()->route('data-managemen.create')->with([
+                'Eror' => 'Hotel with the same name already exists',
+            ]);
         }
 
-        // Create a new hotel entry
-        Hotel::create([
-            'nama' => $validated['nama'],
-            'klasifikasi' => $validated['klasifikasi'],
-            'harga' => $validated['harga'],
+        $harga = json_encode($request->harga, true);
+        if ($request->hasFile('gambar')) {
+
+            $gambarPath = $request->file('gambar')->store('images/hotel', 'public');
+        } else {
+            $gambarPath = null;
+        }
+        Hotel::firstOrCreate([
+            'nama' => $request->nama,
+            'klasifikasi' => $request->klasifikasi,
+            'harga' => $harga,
             'gambar' => $gambarPath,
-            'deskripsi' => $validated['deskripsi'],
-            'lokasi' => $validated['lokasi'],
-            'kapasitas_kamar' => $validated['kapasitas_kamar'],
-            'min_harga' => $validated['min_harga'],
-            'max_harga' => $validated['max_harga'],
+            'deskripsi' => $request->deskripsi,
+            'lokasi' => $request->lokasi,
+            'kapasitas_kamar' => $request->kapasitas_kamar,
+
         ]);
-
-        return redirect()->route('hotels.index')->with('success', 'Hotel created successfully');
+        return redirect()->route('data-managemen.create')->with([
+            'type' => $request->type,
+            'success' => 'Hotel created successfully',
+        ]);
     }
 
-    // Display the specified hotel
-    public function show(Hotel $hotel)
-    {
-        return view('hotels.show', compact('hotel')); // Show details of the selected hotel
-    }
-
-    // Show the form for editing the specified hotel
     public function edit(Hotel $hotel)
     {
-        return view('hotels.edit', compact('hotel')); // Return the edit form for the selected hotel
+
+        return inertia::render('Admin/DataManagemen/Edit', [
+            'editDataHotel' => $hotel,
+            'menu' => 'hotel'
+        ]);
     }
 
-    // Update the specified hotel in storage
     public function update(Request $request, Hotel $hotel)
     {
-        // Validate the request data
-        $validated = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255',
             'klasifikasi' => 'required|integer',
-            'harga' => 'required|numeric',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'deskripsi' => 'nullable|string',
-            'lokasi' => 'nullable|string',
-            'kapasitas_kamar' => 'nullable|integer',
-            'min_harga' => 'nullable|numeric',
-            'max_harga' => 'nullable|numeric',
+            'harga' => 'required|array',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'deskripsi' => 'required|string',
+            'lokasi' => 'required|string',
+            'kapasitas_kamar' => 'required|integer',
         ]);
 
-        // Handle the file upload if a new image is uploaded
+
         if ($request->hasFile('gambar')) {
-            // Delete the old image if it exists
-            if ($hotel->gambar && Storage::exists('public/' . $hotel->gambar)) {
-                Storage::delete('public/' . $hotel->gambar);
+            $file = $request->file('gambar');
+            if ($hotel->gambar && Storage::disk('public')->exists($hotel->gambar)) {
+                Storage::disk('public')->delete($hotel->gambar);
             }
 
-            // Store the new image
-            $gambarPath = $request->file('gambar')->store('images/hotel', 'public');
-        } else {
-            $gambarPath = $hotel->gambar; // Keep the old image if none uploaded
+            $path = $file->store('images/hotel', 'public');
+            $hotel->gambar = $path;
         }
 
-        // Update the hotel data
-        $hotel->update([
-            'nama' => $validated['nama'],
-            'klasifikasi' => $validated['klasifikasi'],
-            'harga' => $validated['harga'],
-            'gambar' => $gambarPath,
-            'deskripsi' => $validated['deskripsi'],
-            'lokasi' => $validated['lokasi'],
-            'kapasitas_kamar' => $validated['kapasitas_kamar'],
-            'min_harga' => $validated['min_harga'],
-            'max_harga' => $validated['max_harga'],
-        ]);
 
-        return redirect()->route('hotels.index')->with('success', 'Hotel updated successfully');
+        $hotel->nama = $request->input('nama');
+        $hotel->klasifikasi = $request->input('klasifikasi');
+        $hotel->harga = $request->input('harga');
+        $hotel->deskripsi = $request->input('deskripsi');
+        $hotel->lokasi = $request->input('lokasi');
+        $hotel->kapasitas_kamar = $request->input('kapasitas_kamar');
+        $hotel->save();
+
+
+        return redirect()->route('hotel.edit', $hotel->id)->with(['success', 'Hotel updated successfully', 'type' => $request->type]);
     }
 
-    // Remove the specified hotel from storage
-    public function destroy(Hotel $hotel)
+    public function show(Hotel $hotel)
     {
-        // Delete the associated image if it exists
-        if ($hotel->gambar && Storage::exists('public/' . $hotel->gambar)) {
-            Storage::delete('public/' . $hotel->gambar);
+
+        return redirect()->route('hotel.destroy', $hotel, );
+    }
+
+    public function destroy($id)
+    {
+        // Cari data berdasarkan ID
+        $hotel = Hotel::findOrFail($id);
+
+        // Jika ada file terkait (misalnya gambar), hapus file tersebut
+        if ($hotel->gambar && Storage::exists($hotel->gambar)) {
+            Storage::delete($hotel->gambar);
         }
 
-        // Delete the hotel record
+        // Hapus data dari database
         $hotel->delete();
 
-        return redirect()->route('hotels.index')->with('success', 'Hotel deleted successfully');
+        // Redirect atau response JSON untuk menampilkan hasil
+        return redirect()
+            ->route('data-managemen.index')
+            ->with('success', 'Data berhasil dihapus.');
     }
+
 }

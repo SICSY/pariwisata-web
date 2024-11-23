@@ -100,7 +100,7 @@ const SideBar = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        href="/admin/data/kolam-renang"
+                                        href="/admin/data/destinasi"
                                         className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
                                     >
                                         <span className="material-icons">
@@ -119,9 +119,7 @@ const SideBar = () => {
                                                 />
                                             </svg>
                                         </span>
-                                        <span className="ml-2">
-                                            Kolam Renang
-                                        </span>
+                                        <span className="ml-2">Destinasi</span>
                                     </Link>
                                 </li>
                                 <li>
@@ -199,7 +197,7 @@ const SideBar = () => {
                     <span className="ml-3">Pengaturan</span>
                 </Link>
                 <Link
-                    href="#"
+                    href="/admin/tools"
                     className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                     <span className="material-icons">
@@ -225,7 +223,7 @@ const SideBar = () => {
                     <span className="ml-3">Tools</span>
                 </Link>
                 <Link
-                    href="#"
+                    href="/admin/post"
                     className="flex items-center px-4 py-4 text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                     <span className="material-icons">

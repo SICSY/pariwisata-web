@@ -10,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('data_pengunjung_hotel', function (Blueprint $table) {
+        Schema::create('data_pengunjung', function (Blueprint $table) {
             $table->id();
             $table->enum('role', ['wisman', 'wisnus']);
             $table->integer('total_pengunjung');
-            $table->foreignId('hotel_id')->constrained('hotel')->onDelete('cascade');
+            $table->morphs('related'); // Ini akan menambahkan related_id dan related_type secara otomatis
             $table->timestamps();
+
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_pengunjung_hotel');
+        Schema::dropIfExists('data_pengunjung');
     }
 };

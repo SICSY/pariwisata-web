@@ -13,9 +13,7 @@ const KontenView = ({ data }) => {
                         <th className="px-4 py-2 border-b">Nama User</th>
                         <th className="px-4 py-2 border-b">IP</th>
                         <th className="px-4 py-2 border-b">Nama Hotel</th>
-                        <th className="px-4 py-2 border-b">
-                            Nama Kolam Renang
-                        </th>
+                        <th className="px-4 py-2 border-b">Nama Destinasi</th>
                     </tr>
                 </thead>
                 <tbody className="text-black">
@@ -30,7 +28,7 @@ const KontenView = ({ data }) => {
                                     {item.hotel?.nama}
                                 </td>
                                 <td className="px-4 py-2 border-b max-w-2xl ">
-                                    {item.kolam_renang?.nama}
+                                    {item.destinasi?.nama}
                                 </td>
                             </tr>
                         );

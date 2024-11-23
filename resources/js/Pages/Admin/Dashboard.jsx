@@ -1,8 +1,7 @@
 import SideBar from "@/Components/SideBar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-
-export default function Dashboard({ totalPengunjungHotel, tabel }) {
+export default function Dashboard({ hotelCount, destinasiCount }) {
     return (
         <div className="flex flex-col sm:flex-row w-full h-screen overflow-hidden text-white bg-gray-900">
             {/* Sidebar for Desktop */}
@@ -32,14 +31,23 @@ export default function Dashboard({ totalPengunjungHotel, tabel }) {
                         </h2>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4  text-center md:w-fit">
                             <div className="bg-gray-700 p-4 rounded-lg">
-                                <h3 className="text-lg">Total Hotel</h3>
-                                <span className="text-2xl font-bold">
-                                    {totalPengunjungHotel}
-                                </span>
+                                <h3 className="text-lg">Total Kunjungan</h3>
+                                <div>
+                                    <span className="text-2xl font-bold"></span>
+                                </div>
+                                <span className="text-2xl font-bold"></span>
                             </div>
                             <div className="bg-gray-700 p-4 rounded-lg">
                                 <h3 className="text-lg">Total Destinasi</h3>
-                                <span className="text-2xl font-bold">256</span>
+                                <span className="text-2xl font-bold">
+                                    {destinasiCount}
+                                </span>
+                            </div>
+                            <div className="bg-gray-700 p-4 rounded-lg">
+                                <h3 className="text-lg">Total Hotel</h3>
+                                <span className="text-2xl font-bold">
+                                    {hotelCount}
+                                </span>
                             </div>
                             {/* Link to Data Management */}
                             <div className="bg-gray-800 rounded-lg p-4 text-white text-center w-fit border">
@@ -51,7 +59,21 @@ export default function Dashboard({ totalPengunjungHotel, tabel }) {
                                     lengkap.
                                 </p>
                                 <Link
-                                    href={route("data-managemen.index")}
+                                    href={route("admin.data-managemen.index")}
+                                    className="underline text-blue-400 mt-4 inline-block"
+                                >
+                                    Buka Manajemen Data
+                                </Link>
+                            </div>
+                            <div className="bg-gray-700 rounded-lg p-4 text-white text-center w-fit ">
+                                <h2 className="text-lg font-semibold mb-4">
+                                    Manajemen Data
+                                </h2>
+                                <p>Kelola data Kunjungan .</p>
+                                <Link
+                                    href={route(
+                                        "admin.kunjungan-managemen.index"
+                                    )}
                                     className="underline text-blue-400 mt-4 inline-block"
                                 >
                                     Buka Manajemen Data
@@ -83,7 +105,7 @@ export default function Dashboard({ totalPengunjungHotel, tabel }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {tabel.map((item, index) => (
+                                    {/* {dataPengunjung.map((item, index) => (
                                         <tr
                                             key={index}
                                             className="border-b border-gray-700"
@@ -101,7 +123,7 @@ export default function Dashboard({ totalPengunjungHotel, tabel }) {
                                                     : "N/A"}
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))} */}
                                 </tbody>
                             </table>
                         </div>

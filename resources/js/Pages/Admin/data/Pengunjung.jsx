@@ -11,7 +11,7 @@ const Pengunjung = ({ data }) => {
                         <th className="border px-4 py-2">Total Pengunjung</th>
                         <th className="border px-4 py-2">Role</th>
                         <th className="border px-4 py-2">Hotel</th>
-                        <th className="border px-4 py-2">Kolam Renang</th>
+                        <th className="border px-4 py-2">Destinasi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@ const Pengunjung = ({ data }) => {
                                 {pengunjung.hotel?.nama || ""}
                             </td>
                             <td className="border px-4 py-2">
-                                {pengunjung.kolam_renang?.nama || ""}
+                                {pengunjung.destinasi?.nama || ""}
                             </td>
                         </tr>
                     ))}

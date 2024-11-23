@@ -13,6 +13,10 @@ return new class extends Migration {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('content')->nullable();
+            $table->boolean('is_visible')->default(0);
+            $table->string('postable_type');
+            $table->unsignedBigInteger('postable_id');
             $table->timestamps();
         });
     }

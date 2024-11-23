@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\DataPengunjungKolamRenang;
+use App\Models\DataPengunjung;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PengunjungKolamRenangSeeder extends Seeder
+class DataPengunjungSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DataPengunjungKolamRenang::factory(10)->create();
+        DataPengunjung::factory()->count(50)->create();
     }
 }

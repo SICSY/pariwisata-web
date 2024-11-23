@@ -2,17 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Hotel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Hotel;
 
 class HotelSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        Hotel::factory()->count(10)->create();
+        // Tambahkan 50 data dummy untuk tabel 'hotel'
+        Hotel::factory()->count(50)->create();
     }
 }

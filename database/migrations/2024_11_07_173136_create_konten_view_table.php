@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade'); // Jika user login, referensi ke ID user
             $table->foreignId('hotel_id')->nullable()->constrained('hotel')->onDelete('cascade'); // Referensi ke hotel
-            $table->foreignId('kolam_renang_id')->nullable()->constrained('kolam_renang')->onDelete('cascade'); // Referensi ke kolam renang
+            $table->foreignId('destinasi_id')->nullable()->constrained('destinasi')->onDelete('cascade');
             $table->string('user_ip')->nullable();
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class KontenView extends Model
     protected $fillable = [
         'user_id',
         'hotel_id',
-        'kolam_renang_id',
+        'destinasi_id',
         'user_ip',
     ];
 
@@ -30,9 +30,8 @@ class KontenView extends Model
         return $this->belongsTo(Hotel::class, 'hotel_id');
     }
 
-    // Relasi ke KolamRenang
-    public function kolamRenang()
+    public function destinasi()
     {
-        return $this->belongsTo(KolamRenang::class, 'kolam_renang_id');
+        return $this->belongsTo(Destinasi::class, 'destinasi_id');
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const KolamRenang = ({ data }) => {
+const Destinasi = ({ data }) => {
     return (
         <div className="overflow-x-auto">
             <table
@@ -19,28 +19,28 @@ const KolamRenang = ({ data }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((kolamRenang) => (
-                        <tr key={kolamRenang.id}>
+                    {data.map((destinasi) => (
+                        <tr key={destinasi.id}>
                             <td className="px-4 py-2 border-b">
-                                {kolamRenang.id}
+                                {destinasi.id}
                             </td>
                             <td className="px-4 py-2 border-b">
-                                {kolamRenang.nama}
+                                {destinasi.nama}
                             </td>
                             <td className="px-4 py-2 border-b">
-                                {kolamRenang.klasifikasi}
+                                {destinasi.klasifikasi}
                             </td>
                             <td className="px-4 py-2 border-b">
-                                {kolamRenang.harga.toLocaleString("id-ID", {
+                                {destinasi.harga.toLocaleString("id-ID", {
                                     style: "currency",
                                     currency: "IDR",
                                 })}
                             </td>
                             <td className="px-4 py-2 border-b">
-                                {kolamRenang.deskripsi}
+                                {destinasi.deskripsi}
                             </td>
                             <td className="px-4 py-2 border-b">
-                                {kolamRenang.lokasi}
+                                {destinasi.lokasi}
                             </td>
                         </tr>
                     ))}
@@ -50,4 +50,4 @@ const KolamRenang = ({ data }) => {
     );
 };
 
-export default KolamRenang;
+export default Destinasi;

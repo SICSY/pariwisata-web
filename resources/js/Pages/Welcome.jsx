@@ -76,7 +76,7 @@ export default function Welcome({ auth }) {
         <>
             <Head title="Welcome" />
 
-            <div className="min-h-full mx-auto max-w-screen-2xl  rounded-b-xl ">
+            <div className="min-h-full mx-auto max-w-screen-2xl  rounded-b-xl sticky top-0 z-50 backdrop-blur-xl backdrop-brightness-[0.5] border-white/20 border">
                 {/* Navbar */}
                 <header className=" shadow-2xl xl:rounded-xl">
                     <nav className="flex justify-between items-center px-4 py-2 ">
@@ -304,9 +304,10 @@ export default function Welcome({ auth }) {
                     </div>
 
                     <div className="bg-gradient-to-t from-cyan-600/40 to-[#020717] sm:h-[35vh] w-full sm:mt-20 items-center align-middle flex flex-col relative justify-center">
-                        <div className="text-white text-center ">
-                            Temukan Data yang tersedia
-                        </div>
+                        <h2 className="text-5xl font-bold font-sans text-slate-500 capitalize">
+                            {" "}
+                            Data yang tersedia
+                        </h2>
                         <div className="relative sm:h-fit mt-10 sm:justify-center sm:items-center h-fit my-2  flex gap-6 text-white   flex-col md:flex-row  w-full  ">
                             <div className="relative min-w-40 h-fit  sm:min-h-3.5 sm:min-w-64 items-center justify-center flex flex-row backdrop-blur-md backdrop-filter backdrop-invert-0 backdrop-brightness-100 gap-1 rounded-l-2xl rounded-r-sm shadow-lg p-4 border border-white/15 self-start sm:self-center mx-5 overflow-hidden">
                                 <div class="absolute inset-0 bg-gradient-to-bl from-yellow-700 via-black to-red-900 opacity-5  "></div>
@@ -357,75 +358,77 @@ export default function Welcome({ auth }) {
                     </div>
                 </section>
 
-                <section className=" relative h-full w-full overflow-hidden">
-                    <p className=" flex w-full md:max-w-[1300px] relative self-center  md:left-0  xl:text-4xl text-3xl mb-3 italic font-serif  text-start px-2   underline opacity-70  text-white tracking-tighter">
-                        Temukan keindahan warisan budaya kami dan jelajahi
-                        destinasi yang menakjubkan.
-                    </p>
+                <section className="gap-4  relative h-full w-full overflow-hidden p-4 md:p-20  ">
+                    <div className="flex">
+                        <p className=" flex w-full md:max-w-[1300px] relative self-center  md:left-0  xl:text-4xl text-xs md:text-2xl mb-3 italic font-serif  text-start px-2    opacity-70  text-white tracking-tighter">
+                            Temukan keindahan warisan budaya kami dan jelajahi
+                            destinasi yang menakjubkan.
+                        </p>
+                        <div className="relative p-2 w-full grid grid-cols-2 md:grid-cols-4 gap-2 h-full">
+                            <div
+                                id="foto-kanan"
+                                className={`sm:min-h-full bg-cover bg-center rounded-2xl transition-all duration-300 ${
+                                    isHovered
+                                        ? "filter grayscale"
+                                        : "filter brightness-50 hover:brightness-100"
+                                }`}
+                                style={{
+                                    backgroundImage: `url("foto/card/foto1.jpg")`,
+                                }}
+                            ></div>
 
-                    <div className="relative p-2 w-full grid grid-cols-2 md:grid-cols-4 gap-2 h-full">
-                        <div
-                            id="foto-kanan"
-                            className={`sm:min-h-full bg-cover bg-center rounded-2xl transition-all duration-300 ${
-                                isHovered
-                                    ? "filter grayscale"
-                                    : "filter brightness-50 hover:brightness-100"
-                            }`}
-                            style={{
-                                backgroundImage: `url("foto/card/foto1.jpg")`,
-                            }}
-                        ></div>
+                            <div
+                                id="foto-kiri"
+                                className={`h-[300px] sm:h-[600px] relative top-0 bg-cover bg-center rounded-2xl sm:relative sm:top-10 transition-all duration-300 ${
+                                    isHovered
+                                        ? "filter grayscale"
+                                        : "filter brightness-50 hover:brightness-100"
+                                }`}
+                                style={{
+                                    backgroundImage: `url("foto/card/foto2.jpg")`,
+                                }}
+                            ></div>
 
-                        <div
-                            id="foto-kiri"
-                            className={`h-[300px] sm:h-[600px] relative top-0 bg-cover bg-center rounded-2xl sm:relative sm:top-10 transition-all duration-300 ${
-                                isHovered
-                                    ? "filter grayscale"
-                                    : "filter brightness-50 hover:brightness-100"
-                            }`}
-                            style={{
-                                backgroundImage: `url("foto/card/foto2.jpg")`,
-                            }}
-                        ></div>
+                            <div
+                                className={`hidden md:block h-[300px] sm:h-96 relative top-10 bg-cover bg-center rounded-2xl sm:relative sm:top-40 transition-all duration-300 ${
+                                    isHovered
+                                        ? "filter grayscale"
+                                        : "filter brightness-50 hover:brightness-100"
+                                }`}
+                                style={{
+                                    backgroundImage: `url("foto/card/foto2.jpg")`,
+                                }}
+                            ></div>
 
-                        <div
-                            className={`hidden md:block h-[300px] sm:h-96 relative top-10 bg-cover bg-center rounded-2xl sm:relative sm:top-40 transition-all duration-300 ${
-                                isHovered
-                                    ? "filter grayscale"
-                                    : "filter brightness-50 hover:brightness-100"
-                            }`}
-                            style={{
-                                backgroundImage: `url("foto/card/foto2.jpg")`,
-                            }}
-                        ></div>
+                            <div
+                                className={`hidden md:block sm:h-[500px] bg-cover bg-center rounded-2xl sm:relative sm:top-10 transition-all duration-300 ${
+                                    isHovered
+                                        ? "filter grayscale"
+                                        : "filter brightness-50 hover:brightness-100"
+                                }`}
+                                style={{
+                                    backgroundImage: `url("foto/card/foto2.jpg")`,
+                                }}
+                            ></div>
 
-                        <div
-                            className={`hidden md:block sm:h-[500px] bg-cover bg-center rounded-2xl sm:relative sm:top-10 transition-all duration-300 ${
-                                isHovered
-                                    ? "filter grayscale"
-                                    : "filter brightness-50 hover:brightness-100"
-                            }`}
-                            style={{
-                                backgroundImage: `url("foto/card/foto2.jpg")`,
-                            }}
-                        ></div>
-
-                        <div
-                            id="btn-explore"
-                            className="absolute justify-self-center self-center bottom-2 h-28 w-max max-w-full mb-4 flex items-center justify-center text-center bg-[#323e2c] border-[4px] border-black rounded-full cursor-pointer"
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                        >
-                            Explore with us
+                            <div
+                                id="btn-explore"
+                                className="absolute justify-self-center self-center bottom-2 h-28 w-max max-w-full mb-4 flex items-center justify-center text-center bg-[#323e2c] border-[4px] border-black rounded-full cursor-pointer"
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                            >
+                                Explore with us
+                            </div>
                         </div>
                     </div>
+
+                    <div className="text-white">halo</div>
                 </section>
 
-                {/* Second Section */}
-                <section>
+                {/* <section>
                     <DataChart></DataChart>
-                </section>
-                <section className=" text-white relative   flex  border h-[100vh] w-full items-center justify-center bg-gradient-to-b from-cyan-600/40 to-[#020717]">
+                </section> */}
+                <section className=" text-white relative   flex   h-[100vh] w-full items-center justify-center bg-gradient-to-b from-cyan-600/40 to-[#020717]">
                     <div className="absolute top-0 left-0 w-full h-full ">
                         <StudioBackground></StudioBackground>
                     </div>

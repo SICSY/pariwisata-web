@@ -5,8 +5,7 @@ import IconSetting from "@/Components/icon/IconSetting";
 import SideBar from "@/Components/SideBar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
-import Hotel from "./data/Hotel";
-import KolamRenang from "./data/KolamRenang";
+import Destinasi from "./data/Destinasi";
 
 export default function Data() {
     const { props } = usePage();
@@ -44,7 +43,7 @@ export default function Data() {
                         <Head title="Data" />
                     </AuthenticatedLayout>
 
-                    <KolamRenang data={data} />
+                    <Destinasi data={data} />
                 </div>
             </div>
 
