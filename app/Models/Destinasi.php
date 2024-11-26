@@ -18,6 +18,7 @@ class Destinasi extends Model
         'deskripsi',
         'lokasi',
         'gambar',
+        'google_map',
 
 
     ];

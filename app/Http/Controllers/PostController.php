@@ -67,4 +67,6 @@ class PostController extends Controller
 
         return redirect()->back()->with('message', 'Postingan berhasil dihapus.');
     }
+
+
 }

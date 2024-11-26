@@ -39,6 +39,7 @@ class DestinasiController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lokasi' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
+            'google_map' => 'nullable|string',
         ]);
         $type = $request->type;
         $harga = json_encode($request->harga, true);
@@ -55,7 +56,8 @@ class DestinasiController extends Controller
             'harga' => $harga,
             'gambar' => $gambar,
             'lokasi' => $request->lokasi,
-            'deskripsi' => $request->deskripsi
+            'deskripsi' => $request->deskripsi,
+            'google_map' => $request->google_map
 
         ]);
 
@@ -68,8 +70,7 @@ class DestinasiController extends Controller
 
     public function update(Request $request, Destinasi $destinasi)
     {
-        dd($request);
-        dd($destinasi->gambar && Storage::disk('public')->exists($destinasi->gambar), $request->gambar, $destinasi->gambar);
+
         $request->validate([
             'nama' => "required|string|max:255",
             'klasifikasi' => 'required|integer',

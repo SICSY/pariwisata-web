@@ -552,6 +552,26 @@ const Create = ({ menu: initialMenu }) => {
                                 </div>
                                 <div className="mb-4">
                                     <label
+                                        htmlFor="google_maps"
+                                        className="block text-sm"
+                                    >
+                                        Google Maps
+                                    </label>
+                                    <input
+                                        type="url"
+                                        id="google_maps"
+                                        className="border text-black px-4 py-2 w-full"
+                                        value={destinasiData.google_maps}
+                                        onChange={(e) =>
+                                            setDestinasiData({
+                                                ...destinasiData,
+                                                lokasi: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
                                         htmlFor="deskripsi"
                                         className="block text-sm"
                                     >

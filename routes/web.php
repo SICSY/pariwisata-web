@@ -9,6 +9,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\DestinasiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\BeritaController as UserBeritaController;
+use App\Http\Controllers\User\DestinasiController as UserDestinasiController;
 use App\Http\Controllers\UserController;
 use App\Models\DataPengunjung;
 use App\Models\Hotel;
@@ -22,19 +24,11 @@ Route::get('/industri-pariwisata', function () {
     return Inertia::render('User/IndustriPariwisata');
 });
 
-Route::get('/destinasi', function () {
-    $posts = Post::where('is_visible', 1)->with('postable')->get();
-    return Inertia::render('User/Destinasi', [
-        'posts' => $posts,
-        'contoh' => Hotel::all(),
-    ]);
-});
+Route::get('/destinasi', [UserDestinasiController::class, 'index']);
+Route::get('/destinasi/{destinasi}', [UserDestinasiController::class, 'show'])->name('user.destinasi.show');
 
-Route::get('/berita', function () {
-    return Inertia::render("User/Berita", [
-        'posts' => Post::where('is_visible', 1)->with('postable')->get(),
-    ]);
-});
+Route::get('/berita', [UserBeritaController::class, 'index'])->name('user.berita.index');
+Route::get('/berita/{post}', [UserBeritaController::class, 'show'])->name('user.berita.show');
 
 Route::get('/profil', function () {
     return Inertia::render('User/Profil');

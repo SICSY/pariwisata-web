@@ -230,6 +230,9 @@ export default function Index({ hotel, destinasi }) {
                                         <th className="border-2 border-gray-500 px-4 py-2">
                                             lokasi
                                         </th>
+                                        <th className="border-2 border-gray-500 px-4 py-2">
+                                            Google Maps
+                                        </th>
                                         <th className="border-2 border-gray-500 px-4 py-2 w-full ">
                                             Deksripsi
                                         </th>
@@ -280,7 +283,11 @@ export default function Index({ hotel, destinasi }) {
                                                     )}
                                                 </td>
                                                 <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {destinasi.deskripsi}
+                                                    {destinasi.lokasi}
+                                                </td>
+                                                <td className="border-2 lowercase border-gray-500 px-4 py-2">
+                                                    {destinasi.google_map}
+                                                    {console.log(destinasi)}
                                                 </td>
                                                 <td
                                                     className="border-2 border-gray-500 px-4 py-2

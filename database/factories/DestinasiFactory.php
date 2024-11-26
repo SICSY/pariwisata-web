@@ -26,6 +26,7 @@ class DestinasiFactory extends Factory
             'gambar' => $this->faker->imageUrl(640, 480, 'destinations', true, 'Destinasi'),
             'deskripsi' => $this->faker->paragraph(3),
             'lokasi' => $this->faker->address,
+            'google_map' => fn() => 'https://www.google.com/maps?q=' . fake()->latitude() . ',' . fake()->longitude(),
         ];
     }
 }

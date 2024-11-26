@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->text('gambar')->nullable();
             $table->text('deskripsi')->nullable();
             $table->string('lokasi');
+            $table->text('google_map')->nullable();
             $table->timestamps();
         });
     }
