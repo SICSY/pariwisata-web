@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\DataPengunjung;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;

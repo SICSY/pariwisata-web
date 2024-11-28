@@ -11,6 +11,7 @@ use App\Http\Controllers\DestinasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\BeritaController as UserBeritaController;
 use App\Http\Controllers\User\DestinasiController as UserDestinasiController;
+use App\Http\Controllers\User\IndustriPariwisataController;
 use App\Http\Controllers\UserController;
 use App\Models\DataPengunjung;
 use App\Models\Hotel;
@@ -18,10 +19,11 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
 Route::get('/', [HomeController::class, 'dataIndex']);
 
 Route::get('/industri-pariwisata', function () {
-    return Inertia::render('User/IndustriPariwisata');
+    return Inertia::render('User/IndustriPariwisata', [IndustriPariwisataController::class, 'index']);
 });
 
 Route::get('/destinasi', [UserDestinasiController::class, 'index']);
@@ -41,6 +43,8 @@ Route::get('/tentang-kami', function () {
 Route::get('/kontak', function () {
     return Inertia::render('User/Kontak');
 });
+
+
 
 
 Route::middleware('auth')->group(function () {

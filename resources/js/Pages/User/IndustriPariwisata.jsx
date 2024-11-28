@@ -1,9 +1,24 @@
-import React from 'react'
+import Card from "@/Components/Card";
+import Header from "@/Layouts/Header";
+import { Link } from "@inertiajs/react";
 
-const IndustriPariwisata = () => {
-  return (
-    <div className='w-full h-screen flex   items-center   justify-center  text-white'>IndustriPariwisata</div>
-  )
-}
+import { useState } from "react";
 
-export default IndustriPariwisata
+const IndustriPariwisata = ({ hotel }) => {
+    const industriPariwisata = hotel.all;
+    console.log(industriPariwisata);
+    return (
+        <>
+            <div className="sticky top-0 z-50 ">
+                <Header></Header>
+            </div>
+            <div>
+                <section>
+                    <img src="https://picsum.photos/3440/1440?grayscale"></img>
+                </section>
+            </div>
+        </>
+    );
+};
+
+export default IndustriPariwisata;

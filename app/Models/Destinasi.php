@@ -27,7 +27,7 @@ class Destinasi extends Model
     {
 
         $klasifikasiMapping = [
-            0 => 'Destiansi',
+            0 => 'Destinasi',
             1 => 'Destinasi & Water Boom',
             2 => 'Budaya',
             3 => 'Buatan',

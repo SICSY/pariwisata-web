@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('destinasi', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
-            $table->tinyInteger('klasifikasi')->comment('0: Destiansi, 1: Destinasi & Water Boom, 2: Budaya, 3: Buatan, 4: Alam');
+            $table->tinyInteger('klasifikasi')->comment('0: Destinasi, 1: Destinasi & Water Boom, 2: Budaya, 3: Buatan, 4: Alam');
 
             $table->json('harga');
             $table->text('gambar')->nullable();
