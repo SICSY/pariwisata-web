@@ -61,7 +61,7 @@ class DestinasiController extends Controller
 
         ]);
 
-        return redirect()->route('data-managemen.create')->with([
+        return redirect()->route('admin.data-managemen.create')->with([
             'success' => 'Data Destinasi berhasil ditambahkan',
             'error' => ' Data Destinasi gagal ditambahkan ',
             'type' => $type
@@ -77,6 +77,7 @@ class DestinasiController extends Controller
             'gambar' => "nullable|image|mimes:jpeg,png,jpg,svg,|max:2048",
             'harga' => 'required|array',
             'lokasi' => 'required|string|max:255',
+            'google_maps' => 'required|string',
             'deskripsi' => 'required|string',
         ]);
 
@@ -97,7 +98,7 @@ class DestinasiController extends Controller
             'harga' => $harga,
         ]);
 
-        return redirect()->route('data-managemen.index')->with([
+        return redirect()->route('admin.data-managemen.create')->with([
             'type' => $request->type
         ]);
 

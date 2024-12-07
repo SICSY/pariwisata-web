@@ -7,7 +7,7 @@ const Create = ({ hotels, destinasis }) => {
         role: "wisman",
         total_pengunjung: "",
         related_id: "",
-        related_type: "hotel", // default ke Hotel
+        related_type: "hotel",
     });
 
     const options = data.related_type === "hotel" ? hotels : destinasis;
@@ -27,7 +27,7 @@ const Create = ({ hotels, destinasis }) => {
                 role: data.role,
                 total_pengunjung: data.total_pengunjung,
                 related_id: data.related_id,
-                related_type: data.related_type, // Send related_type explicitly
+                related_type: data.related_type,
             },
             {
                 onSuccess: () => {
@@ -36,7 +36,7 @@ const Create = ({ hotels, destinasis }) => {
                         role: "wisman",
                         total_pengunjung: "",
                         related_id: "",
-                        related_type: "hotel", // reset to default "hotel"
+                        related_type: "hotel",
                     });
                 },
             }

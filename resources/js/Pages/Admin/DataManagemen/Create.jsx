@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 
 const Create = ({ menu: initialMenu }) => {
     const [menu, setMenu] = useState(initialMenu || "hotel");
     const [pesan, setPesan] = useState(null);
     const [show, setShow] = useState(false);
+    const { errors } = usePage().props;
 
     const {
         data: hotelData,
@@ -41,10 +42,7 @@ const Create = ({ menu: initialMenu }) => {
         gambar: "",
         deskripsi: "",
         lokasi: "",
-    });
-
-    useForm({
-        nama: "",
+        google_maps: "",
     });
 
     const handleSubmit = (e) => {
@@ -54,21 +52,25 @@ const Create = ({ menu: initialMenu }) => {
         if (menu === "hotel") {
             postHotel(route("admin.hotel.store"), {
                 onSuccess: () => {
-                    setPesan("Success: Hotel data Submitted & Edit error");
+                    setPesan("Success: Hotel data  Submitted");
                     resetHotel();
                 },
                 onError: () => {
-                    setPesan("Error: Hotel data Submitted & Edit error");
+                    setPesan(
+                        errors
+                            ? "Error: " + JSON.stringify(errors.error)
+                            : "Error: Hotel data not Submitted"
+                    );
                 },
             });
         } else {
             postDestinasi(route("admin.destinasi.store"), {
                 onSuccess: () => {
-                    setPesan("Success: Destinasi data Submitted & Edit error");
+                    setPesan("Success: Destinasi data  Submitted");
                     resetDestinasi();
                 },
                 onError: () => {
-                    setPesan("Error: Destinasi data Submitted & Edit error");
+                    setPesan("Error: Destinasi data not Submitted");
                 },
             });
         }
@@ -113,11 +115,16 @@ const Create = ({ menu: initialMenu }) => {
     }, [pesan]);
 
     return (
-        <div lenis-data-prevent className="flex w-full  h-screen relative ">
+        <div
+            lenis-data-prevent
+            className="flex w-full  h-screen relative overflow-hidden "
+        >
             {show && pesan && (
-                <div className="absolute left-2/4 right-2/4 w-min-fit h-fit   flex items-center justify-center bg-gray-800 bg-opacity-50 duration-1000">
+                <div
+                    className={`absolute  w-full h-fit flex items-end justify-end bg-gray-800 bg-opacity-0 duration-1000 overflow-hidden `}
+                >
                     <div
-                        className={`text-white px-6 py-4 rounded-lg transition-all ${
+                        className={`text-white px-6 py-4 border rounded-lg transition-all ${
                             pesan.includes("Error")
                                 ? "bg-red-500"
                                 : "bg-green-500"
@@ -305,10 +312,23 @@ const Create = ({ menu: initialMenu }) => {
                         </div>
 
                         {menu === "hotel" && (
-                            <>
+                            <div>
+                                {(menu === "hotel"
+                                    ? hotelErrors
+                                    : destinasiErrors
+                                ).min && (
+                                    <div className="text-red-500">
+                                        {
+                                            (menu === "hotel"
+                                                ? hotelErrors
+                                                : destinasiErrors
+                                            ).min
+                                        }
+                                    </div>
+                                )}
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="min"
+                                        htmlFor="harga"
                                         className="block text-sm"
                                     >
                                         Harga
@@ -326,7 +346,7 @@ const Create = ({ menu: initialMenu }) => {
                                                 id="min"
                                                 className="border text-black  px-4 py-2 w-full"
                                                 value={formatRupiah(
-                                                    hotelData.harga?.min || " "
+                                                    hotelData.harga.min || "0"
                                                 )}
                                                 onChange={handleChange}
                                                 placeholder="xxx,xxx,xx"
@@ -334,13 +354,13 @@ const Create = ({ menu: initialMenu }) => {
                                             {(menu === "hotel"
                                                 ? hotelErrors
                                                 : destinasiErrors
-                                            ).min && (
+                                            ).harga && (
                                                 <div className="text-red-500">
                                                     {
                                                         (menu === "hotel"
                                                             ? hotelErrors
                                                             : destinasiErrors
-                                                        ).min
+                                                        ).harga
                                                     }
                                                 </div>
                                             )}
@@ -358,7 +378,7 @@ const Create = ({ menu: initialMenu }) => {
                                                 id="max"
                                                 className="border text-black  px-4 py-2 w-full"
                                                 value={formatRupiah(
-                                                    hotelData.harga?.max || " "
+                                                    hotelData.harga.max || "0"
                                                 )}
                                                 onChange={handleChange}
                                                 placeholder="xxx,xxx,xx"
@@ -387,7 +407,7 @@ const Create = ({ menu: initialMenu }) => {
                                         Kapasitas Kamar
                                     </label>
                                     <input
-                                        type="teks"
+                                        type="text"
                                         id="kapasitas_kamar"
                                         className="border text-black px-4 py-2 w-full"
                                         value={hotelData.kapasitas_kamar}
@@ -398,6 +418,11 @@ const Create = ({ menu: initialMenu }) => {
                                             })
                                         }
                                     />
+                                    {hotelErrors.kapasitas_kamar && (
+                                        <div className="text-red-500">
+                                            {hotelErrors.kapasitas_kamar}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="mb-4">
                                     <label
@@ -407,7 +432,7 @@ const Create = ({ menu: initialMenu }) => {
                                         Lokasi
                                     </label>
                                     <input
-                                        type="teks"
+                                        type="text"
                                         id="lokasi"
                                         className="border text-black px-4 py-2 w-full"
                                         value={hotelData.lokasi}
@@ -418,6 +443,11 @@ const Create = ({ menu: initialMenu }) => {
                                             })
                                         }
                                     />
+                                    {hotelErrors.lokasi && (
+                                        <div className="text-red-500">
+                                            {hotelErrors.lokasi}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="mb-4">
@@ -450,14 +480,125 @@ const Create = ({ menu: initialMenu }) => {
                                             }
                                         }}
                                     ></textarea>
+                                    {hotelErrors.deskripsi && (
+                                        <div className="text-red-500">
+                                            {hotelErrors.deskripsi}
+                                        </div>
+                                    )}
                                 </div>
-                            </>
+                            </div>
                         )}
                         {menu === "destinasi" && (
                             <>
+                                {/* <div className="mb-4">
+                                    <label className="block text-sm">
+                                        Harga
+                                    </label>
+                                    <div className="flex justify-between">
+                                        <div className="w-full pr-2">
+                                            <label
+                                                htmlFor="min"
+                                                className="block text-sm"
+                                            >
+                                                Min
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="min"
+                                                className={`border text-black px-4 py-2 w-full ${
+                                                    (
+                                                        menu === "destinasi"
+                                                            ? destinasiErrors
+                                                                  ?.harga?.min
+                                                            : hotelErrors?.harga
+                                                                  ?.min
+                                                    )
+                                                        ? "border-red-500"
+                                                        : ""
+                                                }`}
+                                                value={formatRupiah(
+                                                    destinasiData.harga?.min ||
+                                                        ""
+                                                )}
+                                                onChange={(e) =>
+                                                    handleChange({
+                                                        target: {
+                                                            name: "harga.min",
+                                                            value: e.target
+                                                                .value,
+                                                        },
+                                                    })
+                                                }
+                                                placeholder="xxx,xxx,xx"
+                                            />
+
+                                            {(menu === "destinasi"
+                                                ? destinasiErrors?.harga?.min
+                                                : hotelErrors?.harga?.min) && (
+                                                <div className="text-red-500 text-sm">
+                                                    {menu === "destinasi"
+                                                        ? destinasiErrors?.harga
+                                                              ?.min
+                                                        : hotelErrors?.harga
+                                                              ?.min}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="w-full pl-2">
+                                            <label
+                                                htmlFor="max"
+                                                className="block text-sm"
+                                            >
+                                                Max
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="max"
+                                                className={`border text-black px-4 py-2 w-full ${
+                                                    (
+                                                        menu === "destinasi"
+                                                            ? destinasiErrors
+                                                                  ?.harga?.max
+                                                            : hotelErrors?.harga
+                                                                  ?.max
+                                                    )
+                                                        ? "border-red-500"
+                                                        : ""
+                                                }`}
+                                                value={formatRupiah(
+                                                    destinasiData.harga?.max ||
+                                                        ""
+                                                )}
+                                                onChange={(e) =>
+                                                    handleChange({
+                                                        target: {
+                                                            name: "harga.max",
+                                                            value: e.target
+                                                                .value,
+                                                        },
+                                                    })
+                                                }
+                                                placeholder="xxx,xxx,xx"
+                                            />
+
+                                            {(menu === "destinasi"
+                                                ? destinasiErrors?.harga?.max
+                                                : hotelErrors?.harga?.max) && (
+                                                <div className="text-red-500 text-sm">
+                                                    {menu === "destinasi"
+                                                        ? destinasiErrors?.harga
+                                                              ?.max
+                                                        : hotelErrors?.harga
+                                                              ?.max}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div> */}
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="min"
+                                        htmlFor="harga"
                                         className="block text-sm"
                                     >
                                         Harga
@@ -475,8 +616,8 @@ const Create = ({ menu: initialMenu }) => {
                                                 id="min"
                                                 className="border text-black  px-4 py-2 w-full"
                                                 value={formatRupiah(
-                                                    destinasiData.harga?.min ||
-                                                        " "
+                                                    destinasiData.harga.min ||
+                                                        "0"
                                                 )}
                                                 onChange={handleChange}
                                                 placeholder="xxx,xxx,xx"
@@ -484,19 +625,19 @@ const Create = ({ menu: initialMenu }) => {
                                             {(menu === "destinasi"
                                                 ? destinasiErrors
                                                 : hotelErrors
-                                            ).min && (
+                                            ).harga && (
                                                 <div className="text-red-500">
                                                     {
                                                         (menu === "destinasi"
                                                             ? destinasiErrors
                                                             : hotelErrors
-                                                        ).min
+                                                        ).harga
                                                     }
                                                 </div>
                                             )}
                                         </div>
 
-                                        <div className="w-full pl-2">
+                                        <div className="w-full pr-2">
                                             <label
                                                 htmlFor="max"
                                                 className="block text-sm"
@@ -506,21 +647,21 @@ const Create = ({ menu: initialMenu }) => {
                                             <input
                                                 type="text"
                                                 id="max"
-                                                className="border text-black px-4 py-2 w-full"
+                                                className="border text-black  px-4 py-2 w-full"
                                                 value={formatRupiah(
-                                                    destinasiData.harga?.max ||
-                                                        " "
+                                                    destinasiData.harga.max ||
+                                                        "0"
                                                 )}
                                                 onChange={handleChange}
                                                 placeholder="xxx,xxx,xx"
                                             />
-                                            {(menu === "hotel"
+                                            {(menu === "destinasi"
                                                 ? destinasiErrors
                                                 : hotelErrors
                                             ).max && (
                                                 <div className="text-red-500">
                                                     {
-                                                        (menu === "hotel"
+                                                        (menu === "destinasi"
                                                             ? destinasiErrors
                                                             : hotelErrors
                                                         ).max
@@ -530,6 +671,7 @@ const Create = ({ menu: initialMenu }) => {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="mb-4">
                                     <label
                                         htmlFor="lokasi"
@@ -538,7 +680,7 @@ const Create = ({ menu: initialMenu }) => {
                                         Lokasi
                                     </label>
                                     <input
-                                        type="teks"
+                                        type="text"
                                         id="lokasi"
                                         className="border text-black px-4 py-2 w-full"
                                         value={destinasiData.lokasi}
@@ -565,7 +707,7 @@ const Create = ({ menu: initialMenu }) => {
                                         onChange={(e) =>
                                             setDestinasiData({
                                                 ...destinasiData,
-                                                lokasi: e.target.value,
+                                                google_maps: e.target.value,
                                             })
                                         }
                                     />
@@ -578,7 +720,7 @@ const Create = ({ menu: initialMenu }) => {
                                         Deskripsi
                                     </label>
                                     <input
-                                        type="teks"
+                                        type="text"
                                         id="deskripsi"
                                         className="border text-black px-4 py-2 w-full"
                                         value={destinasiData.deskripsi}

@@ -55,7 +55,7 @@ const Edit = ({
         setPesan("");
         if (menu === "hotel") {
             router.post(
-                route("hotel.update", editDataHotel.id),
+                route("admin.hotel.update", editDataHotel.id),
                 {
                     ...hotelData,
                     _method: "PUT",
@@ -67,15 +67,16 @@ const Edit = ({
                         );
                         resetHotel();
                     },
-                    onError: () => {
+                    onError: (e) => {
                         setPesan("Error: Hotel data Submitted & Edit error");
                         resetHotel();
+                        console.log(e);
                     },
                 }
             );
         } else {
             router.post(
-                route("destinasi.update", editDataDestinasi.id),
+                route("admin.destinasi.update", editDataDestinasi.id),
                 {
                     ...destinasiData,
                     _method: "PUT",
@@ -87,10 +88,11 @@ const Edit = ({
                         );
                         resetDestinasi();
                     },
-                    onError: () => {
+                    onError: (e) => {
                         setPesan(
                             "Error: Destinasi data Submitted & Edit error."
                         );
+                        console.log(e);
                     },
                 }
             );

@@ -61,7 +61,7 @@ class DataKunjunganController extends Controller
             'related_type' => $relatedType,
             'related_id' => $request->related_id,
         ]);
-        return redirect()->route('kunjungan-managemen.index')->with('success', 'Data pengunjung berhasil ditambahkan.');
+        return redirect()->route('admin.kunjungan-managemen.index')->with('success', 'Data pengunjung berhasil ditambahkan.');
     }
 
 

@@ -8,24 +8,20 @@ use App\Http\Controllers\DataManagemenController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\DestinasiController;
+use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\BeritaController as UserBeritaController;
 use App\Http\Controllers\User\DestinasiController as UserDestinasiController;
 use App\Http\Controllers\User\IndustriPariwisataController;
 use App\Http\Controllers\UserController;
-use App\Models\DataPengunjung;
-use App\Models\Hotel;
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
 Route::get('/', [HomeController::class, 'dataIndex']);
 
-Route::get('/industri-pariwisata', function () {
-    return Inertia::render('User/IndustriPariwisata', [IndustriPariwisataController::class, 'index']);
-});
-
+Route::get('/industri-pariwisata', [IndustriPariwisataController::class, 'index']);
+Route::get('/industri-pariwisata/{industri}', [IndustriPariwisataController::class, 'show'])->name('user.industri.show');
 Route::get('/destinasi', [UserDestinasiController::class, 'index']);
 Route::get('/destinasi/{destinasi}', [UserDestinasiController::class, 'show'])->name('user.destinasi.show');
 
@@ -62,13 +58,14 @@ Route::middleware(['auth', 'userMiddleware'])->group(function () {
 
 Route::middleware(['auth', 'adminMiddleware'])->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('data/hotel', [AdminController::class, 'dataHotel'])->name('admin.hotel');
-    Route::get('data/destinasi', [AdminController::class, 'dataDestinasi'])->name('admin.destinasi');
+    Route::get('data/hotel', [AdminController::class, 'dataHotel'])->name('admin.data.hotel');
+    Route::get('data/destinasi', [AdminController::class, 'dataDestinasi'])->name('admin.data.destinasi');
     Route::get('data/konten-view', [AdminController::class, 'dataKontenView'])->name('admin.konten-view');
 
     // Route::get('data/pengunjung', [AdminController::class, 'dataPengunjung'])->name('admin.pengunjung');
 
-    Route::resource('data-managemen', DataManagemenController::class)->names('admin.data-managemen');
+    Route::get('data-managemen', [DataManagemenController::class, 'index'])->name('admin.data-managemen.index');
+    Route::get('data-managemen/create', [DataManagemenController::class, 'create'])->name('admin.data-managemen.create');
     Route::resource('hotel', HotelController::class)->only(['index', 'store', 'update', 'edit', 'show', 'destroy'])->names('admin.hotel');
     Route::resource('destinasi', DestinasiController::class)->names('admin.destinasi');
 
@@ -77,16 +74,19 @@ Route::middleware(['auth', 'adminMiddleware'])->prefix('admin')->group(function 
     Route::get('kunjungan-managemen/create', [DataKunjunganController::class, 'create'])->name('admin.kunjungan-managemen.create');
     Route::post('kunjungan-managemen/create', [DataKunjunganController::class, 'store'])->name('admin.kunjungan-managemen.store');
 
-    Route::get('data/pengunjung', function () {
-        $pengunjung = DataPengunjung::with('related')->get();
-        return Inertia::render('example/Mui', ['pengunjung' => $pengunjung]);
-    })->name('admin.pengunjung');
+    Route::get('data/pengunjung', [PengunjungController::class, 'index'])->name("admin.pengunjung.index");
 
-    Route::get('/post', [PostController::class, 'index'])->name('admin.post.index');
-    Route::get('/post/create', [PostController::class, 'create'])->name('admin.post.create');
-    Route::post('/post', [PostController::class, 'store'])->name('admin.post.store');
-    Route::patch('/posts/{post}/toggle', [PostController::class, 'toggleVisibility'])->name('admin.posts.toggle');
-    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
+    // Route::get('/posts', [PostController::class, 'index'])->name('admin.post.index');
+    // Route::get('/posts/create', [PostController::class, 'create'])->name('admin.post.create');
+    // Route::post('/posts', [PostController::class, 'store'])->name('admin.post.store');
+    // Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('admin.post.edit');
+    // Route::put('/posts/{post}', [PostController::class, 'update'])->name('admin.post.update');
+    // Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('admin.post.destroy');
+
+
+
+    Route::resource('posts', PostController::class)->names('admin.post');
+
 
 
     Route::get('/tools', function () {

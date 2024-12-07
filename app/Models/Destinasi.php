@@ -46,8 +46,5 @@ class Destinasi extends Model
         return $this->morphMany(DataPengunjung::class, 'related');
     }
 
-    public function post()
-    {
-        return $this->morphMany(Post::class, 'postable');
-    }
+
 }

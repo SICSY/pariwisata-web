@@ -32,4 +32,5 @@ class DataManagemenController extends Controller
         return Inertia::render('Admin/DataManagemen/Create');
     }
 
+
 }

@@ -15,23 +15,23 @@ class HotelController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
+
+
         $request->validate([
             'nama' => 'required|string|max:255',
             'klasifikasi' => 'required|integer',
-            'harga' => 'required|array',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'deskripsi' => 'nullable|string',
-            'lokasi' => 'nullable|string',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kapasitas_kamar' => 'required|integer',
+            'deskripsi' => 'required|string',
+            'lokasi' => 'required|string',
+
         ]);
 
         // Mengecek apakah hotel dengan nama yang sama sudah ada
         $existingHotel = Hotel::where('nama', $request->nama)->first();
         if ($existingHotel) {
             // Jika hotel sudah ada, kembalikan pesan error
-            return redirect()->route('data-managemen.create')->with([
-                'Eror' => 'Hotel with the same name already exists',
-            ]);
+            return redirect()->route('admin.data-managemen.create')->withErrors(['error' => 'Hotel with the same name already exists.']);
         }
 
         $harga = json_encode($request->harga, true);
@@ -41,7 +41,7 @@ class HotelController extends Controller
         } else {
             $gambarPath = null;
         }
-        Hotel::firstOrCreate([
+        Hotel::create([
             'nama' => $request->nama,
             'klasifikasi' => $request->klasifikasi,
             'harga' => $harga,
@@ -51,10 +51,7 @@ class HotelController extends Controller
             'kapasitas_kamar' => $request->kapasitas_kamar,
 
         ]);
-        return redirect()->route('data-managemen.create')->with([
-            'type' => $request->type,
-            'success' => 'Hotel created successfully',
-        ]);
+        return redirect()->route('admin.data-managemen.create');
     }
 
     public function edit(Hotel $hotel)
@@ -75,7 +72,7 @@ class HotelController extends Controller
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'required|string',
             'lokasi' => 'required|string',
-            'kapasitas_kamar' => 'required|integer',
+            'kapasitas_kamar' => 'required|string|max:255',
         ]);
 
 
@@ -99,7 +96,7 @@ class HotelController extends Controller
         $hotel->save();
 
 
-        return redirect()->route('hotel.edit', $hotel->id)->with(['success', 'Hotel updated successfully', 'type' => $request->type]);
+        return redirect()->route('admin.data-managemen.index', $hotel->id)->with(['success', 'Hotel updated successfully', 'type' => $request->type]);
     }
 
     public function show(Hotel $hotel)
@@ -123,7 +120,7 @@ class HotelController extends Controller
 
         // Redirect atau response JSON untuk menampilkan hasil
         return redirect()
-            ->route('data-managemen.index')
+            ->route('admin.data-managemen.index')
             ->with('success', 'Data berhasil dihapus.');
     }
 

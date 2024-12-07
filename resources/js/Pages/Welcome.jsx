@@ -1,12 +1,12 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import DataChart from "@/Components/DataChart";
-import Footer from "@/Components/Footer";
-import FooterMobile from "@/Components/FooterMobile";
+// import ApplicationLogo from "@/Components/ApplicationLogo";
+// import DataChart from "@/Components/DataChart";
+
+// import FooterMobile from "@/Components/FooterMobile";
 import StudioBackground from "@/Components/StudioBackground";
 import Header from "@/Layouts/Header";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { useState, useEffect, useRef } from "react";
-
+import Footer from "@/Components/Footer";
 export default function Welcome({ auth }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isUserInteracting, setIsUserInteracting] = useState(false);
@@ -80,7 +80,7 @@ export default function Welcome({ auth }) {
 
             <div className="min-h-full mx-auto max-w-screen-2xl  rounded-b-xl sticky top-0 z-50 backdrop-blur-xl backdrop-brightness-[0.5] border-white/20 border">
                 {/* Navbar */}
-                <Header></Header>
+                <Header auth={auth}></Header>
             </div>
 
             {/* Main Content Area */}

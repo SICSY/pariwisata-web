@@ -1,140 +1,119 @@
-import React, { useState } from "react";
-import { Inertia } from "@inertiajs/inertia";
+import { useMemo, useState } from "react";
+import { router } from "@inertiajs/react";
+import JoditEditor from "jodit-react";
 
-const Create = ({ hotels, destinasi }) => {
-    const [formData, setFormData] = useState({
+export default function Create() {
+    const [values, setValues] = useState({
         title: "",
         content: "",
-        postable_type: "",
-        postable_id: "",
-        is_visible: true,
+        status: "draft",
     });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    // Handle content changes in the editor
+    function handleEditorChange(newContent) {
+        setValues((prevValues) => ({
+            ...prevValues,
+            content: newContent,
+        }));
+    }
 
-    const handleSubmit = (e) => {
+    // Define file upload handler for the Jodit editor
+    // Jodit Editor configuration
+    const config = useMemo(
+        () => ({
+            height: 400,
+            toolbar: true,
+            toolbarAdaptive: false,
+            toolbarInline: false,
+            toolbarSticky: false,
+            readonly: false,
+            placeholder: "Start typing...",
+            uploader: {
+                insertImageAsBase64URI: true,
+            },
+        }),
+        []
+    );
+
+    // Handle form submission
+    function handleSubmit(e) {
         e.preventDefault();
-        Inertia.post("/admin/post", formData);
-    };
-
-    // Determine the options for `postable_id` based on `postable_type`
-    const relatedOptions =
-        formData.postable_type === "Hotel"
-            ? hotels
-            : formData.postable_type === "Destinasi"
-            ? destinasi
-            : [];
+        router.post(route("admin.post.store"), values);
+    }
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
-            <h1 className="text-2xl font-bold mb-6">Create Post</h1>
-            <form onSubmit={handleSubmit}>
-                {/* Title */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Title</label>
+        <div className="max-w-4xl mx-auto p-8 bg-gray-800 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold text-center text-white mb-6">
+                Create New Post
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Title Input */}
+                <div>
+                    <label
+                        htmlFor="title"
+                        className="block text-white text-sm font-semibold mb-2"
+                    >
+                        Title:
+                    </label>
                     <input
+                        id="title"
                         type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-md"
-                        required
+                        value={values.title}
+                        onChange={(e) =>
+                            setValues({ ...values, title: e.target.value })
+                        }
+                        className="w-full px-4 py-2 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter title"
                     />
                 </div>
 
-                {/* Content */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Content</label>
-                    <textarea
-                        name="content"
-                        value={formData.content}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-md"
-                        rows="4"
-                        required
+                {/* Content (Jodit Editor) */}
+                <div>
+                    <label
+                        htmlFor="content"
+                        className="block text-white text-sm font-semibold mb-2"
+                    >
+                        Content:
+                    </label>
+                    <JoditEditor
+                        value={values.content}
+                        onChange={handleEditorChange}
+                        config={config}
+                        className="rounded-lg shadow-md"
                     />
                 </div>
 
-                {/* Select Related Type */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">
-                        Related Type
-                    </label>
-                    <select
-                        name="postable_type"
-                        value={formData.postable_type}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-md"
-                        required
-                    >
-                        <option disabled value="">
-                            -- Select Type --
-                        </option>
-                        <option value="Hotel">Hotel</option>
-                        <option value="Destinasi">Destinasi</option>
-                    </select>
-                </div>
-
-                {/* Select Related ID */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">
-                        Related ID
-                    </label>
-                    <select
-                        name="postable_id"
-                        value={formData.postable_id}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-md"
-                        required
-                        disabled={!relatedOptions.length}
-                    >
-                        <option disabled value="">
-                            -- Select ID --
-                        </option>
-                        {relatedOptions
-                            .sort((a, b) => a.nama.localeCompare(b.nama)) // Mengurutkan secara alfabet
-                            .map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.nama}
-                                </option>
-                            ))}
-                    </select>
-                </div>
-
-                {/* Visibility */}
-                <div className="mb-4">
-                    <label className="flex items-center">
+                {/* Status Checkbox */}
+                <div>
+                    <label className="flex items-center text-white text-sm">
                         <input
                             type="checkbox"
-                            name="is_visible"
-                            checked={formData.is_visible}
+                            checked={values.status === "published"}
                             onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    is_visible: e.target.checked,
-                                })
+                                setValues((prevValues) => ({
+                                    ...prevValues,
+                                    status: e.target.checked
+                                        ? "published"
+                                        : "draft",
+                                }))
                             }
                             className="mr-2"
                         />
-                        Visible
+                        <span>Publish Post</span>
                     </label>
                 </div>
 
                 {/* Submit Button */}
-                <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                >
-                    Create Post
-                </button>
+                <div className="flex justify-center">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
+                    >
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
     );
-};
-
-export default Create;
+}

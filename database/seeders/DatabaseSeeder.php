@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
 
 
             UserSeeder::class,
-            HotelSeeder::class,
+            // HotelSeeder::class,
 
-            DestinasiSeeder::class,
-            DataPengunjungSeeder::class,
+            // DestinasiSeeder::class,
+            // DataPengunjungSeeder::class,
         ]);
     }
 }

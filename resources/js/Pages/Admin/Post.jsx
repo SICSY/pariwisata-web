@@ -2,7 +2,7 @@ import FooterMobile from "@/Components/FooterMobile";
 
 import SideBar from "@/Components/SideBar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import PostsIndex from "./Post/Index";
+import PostsIndex from "./post/Index";
 
 const Post = ({ posts }) => {
     return (

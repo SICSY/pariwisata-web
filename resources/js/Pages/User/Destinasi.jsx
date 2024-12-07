@@ -3,14 +3,14 @@ import Header from "@/Layouts/Header";
 import { Link } from "@inertiajs/react";
 import { useState } from "react";
 
-const Destinasi = ({ destinasi }) => {
+const Destinasi = ({ destinasi, auth }) => {
     let [idDestinasi, setidDestinasi] = useState("destinasi-destinasi");
 
     return (
         <>
             <div className="min-h-full mx-auto max-w-screen-2xl  rounded-b-xl sticky top-0 z-50 backdrop-blur-xl backdrop-brightness-[0.5] border-white/20 border">
                 {/* Navbar */}
-                <Header></Header>
+                <Header auth={auth}></Header>
             </div>
 
             <div className="w-full h-full ">
@@ -75,59 +75,35 @@ const Destinasi = ({ destinasi }) => {
                                                 value.klasifikasi_format ===
                                                 "Destinasi"
                                         )
-                                        .map(
-                                            (value, index) => (
-                                                console.log(value),
-                                                (
-                                                    <Card
-                                                        image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                                        key={index}
-                                                        bodyClassName=" text-black/50 flex-1 "
-                                                        footerClassName="bg-slate-800 "
-                                                        className="flex flex-col "
-                                                        footer={
-                                                            <Link
-                                                                href={route(
-                                                                    "user.destinasi.show",
-                                                                    {
-                                                                        destinasi:
-                                                                            value.id,
-                                                                    }
-                                                                )}
-                                                                className="underline hover:text-blue-600"
-                                                            >
-                                                                Read More
-                                                            </Link>
-                                                        }
-                                                        title={value.nama}
-                                                        actions={[
+                                        .map((value, index) => (
+                                            <Card
+                                                image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                                key={index}
+                                                bodyClassName=" text-black/50 flex-1 "
+                                                footerClassName="bg-slate-800 "
+                                                className="flex flex-col "
+                                                footer={
+                                                    <Link
+                                                        href={route(
+                                                            "user.destinasi.show",
                                                             {
-                                                                label: "Like",
-                                                                variant:
-                                                                    "primary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Liked!"
-                                                                    ),
-                                                            },
-                                                            {
-                                                                label: "Share",
-                                                                variant:
-                                                                    "secondary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Shared!"
-                                                                    ),
-                                                            },
-                                                        ]}
+                                                                destinasi:
+                                                                    value.id,
+                                                            }
+                                                        )}
+                                                        className="underline hover:text-blue-600"
                                                     >
-                                                        <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                            {value.deskripsi}
-                                                        </p>
-                                                    </Card>
-                                                )
-                                            )
-                                        )}
+                                                        Read More
+                                                    </Link>
+                                                }
+                                                title={value.nama}
+                                                headerClassName="uppercase font-extrabold"
+                                            >
+                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                    {value.deskripsi}
+                                                </p>
+                                            </Card>
+                                        ))}
                                 </div>
                             </div>
                         )}
@@ -142,59 +118,35 @@ const Destinasi = ({ destinasi }) => {
                                                 value.klasifikasi_format ===
                                                 "Destinasi & Water Boom"
                                         )
-                                        .map(
-                                            (value, index) => (
-                                                console.log(value),
-                                                (
-                                                    <Card
-                                                        image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                                        key={index}
-                                                        bodyClassName="  text-black/50 flex-10"
-                                                        footerClassName="bg-slate-800"
-                                                        className="flex flex-col"
-                                                        footer={
-                                                            <Link
-                                                                href={route(
-                                                                    "user.destinasi.show",
-                                                                    {
-                                                                        destinasi:
-                                                                            value.id,
-                                                                    }
-                                                                )}
-                                                                className="underline hover:text-blue-600"
-                                                            >
-                                                                Read More
-                                                            </Link>
-                                                        }
-                                                        title="Card with Icon"
-                                                        actions={[
+                                        .map((value, index) => (
+                                            <Card
+                                                image={`storage/${value.gambar}`}
+                                                key={index}
+                                                bodyClassName="  text-black/50 flex-10"
+                                                footerClassName="bg-slate-800"
+                                                className="flex flex-col "
+                                                footer={
+                                                    <Link
+                                                        href={route(
+                                                            "user.destinasi.show",
                                                             {
-                                                                label: "Like",
-                                                                variant:
-                                                                    "primary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Liked!"
-                                                                    ),
-                                                            },
-                                                            {
-                                                                label: "Share",
-                                                                variant:
-                                                                    "secondary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Shared!"
-                                                                    ),
-                                                            },
-                                                        ]}
+                                                                destinasi:
+                                                                    value.id,
+                                                            }
+                                                        )}
+                                                        className="underline hover:text-blue-600"
                                                     >
-                                                        <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                            {value.deskripsi}
-                                                        </p>
-                                                    </Card>
-                                                )
-                                            )
-                                        )}
+                                                        Read More
+                                                    </Link>
+                                                }
+                                                title={value.nama}
+                                                headerClassName="uppercase font-extrabold"
+                                            >
+                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                    {value.deskripsi}
+                                                </p>
+                                            </Card>
+                                        ))}
                                 </div>
                             </div>
                         )}
@@ -209,59 +161,35 @@ const Destinasi = ({ destinasi }) => {
                                                 value.klasifikasi_format ===
                                                 "Alam"
                                         )
-                                        .map(
-                                            (value, index) => (
-                                                console.log(value),
-                                                (
-                                                    <Card
-                                                        image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                                        key={index}
-                                                        bodyClassName="  text-black/50 flex-10"
-                                                        footerClassName="bg-slate-800"
-                                                        className="flex flex-col"
-                                                        footer={
-                                                            <Link
-                                                                href={route(
-                                                                    "user.destinasi.show",
-                                                                    {
-                                                                        destinasi:
-                                                                            value.id,
-                                                                    }
-                                                                )}
-                                                                className="underline hover:text-blue-600"
-                                                            >
-                                                                Read More
-                                                            </Link>
-                                                        }
-                                                        title="Card with Icon"
-                                                        actions={[
+                                        .map((value, index) => (
+                                            <Card
+                                                image={`storage/${value.gambar}`}
+                                                key={index}
+                                                bodyClassName="  text-black/50 flex-10"
+                                                footerClassName="bg-slate-800"
+                                                className="flex flex-col"
+                                                footer={
+                                                    <Link
+                                                        href={route(
+                                                            "user.destinasi.show",
                                                             {
-                                                                label: "Like",
-                                                                variant:
-                                                                    "primary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Liked!"
-                                                                    ),
-                                                            },
-                                                            {
-                                                                label: "Share",
-                                                                variant:
-                                                                    "secondary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Shared!"
-                                                                    ),
-                                                            },
-                                                        ]}
+                                                                destinasi:
+                                                                    value.id,
+                                                            }
+                                                        )}
+                                                        className="underline hover:text-blue-600"
                                                     >
-                                                        <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                            {value.deskripsi}
-                                                        </p>
-                                                    </Card>
-                                                )
-                                            )
-                                        )}
+                                                        Read More
+                                                    </Link>
+                                                }
+                                                title={value.nama}
+                                                headerClassName="uppercase font-extrabold"
+                                            >
+                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                    {value.deskripsi}
+                                                </p>
+                                            </Card>
+                                        ))}
                                 </div>
                             </div>
                         )}
@@ -276,59 +204,35 @@ const Destinasi = ({ destinasi }) => {
                                                 value.klasifikasi_format ===
                                                 "Budaya"
                                         )
-                                        .map(
-                                            (value, index) => (
-                                                console.log(value),
-                                                (
-                                                    <Card
-                                                        image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                                        key={index}
-                                                        bodyClassName=" text-black/50 flex-1"
-                                                        footerClassName="bg-slate-800"
-                                                        className="flex flex-col"
-                                                        footer={
-                                                            <Link
-                                                                href={route(
-                                                                    "user.destinasi.show",
-                                                                    {
-                                                                        destinasi:
-                                                                            value.id,
-                                                                    }
-                                                                )}
-                                                                className="underline hover:text-blue-600"
-                                                            >
-                                                                Read More
-                                                            </Link>
-                                                        }
-                                                        title="Card with Icon"
-                                                        actions={[
+                                        .map((value, index) => (
+                                            <Card
+                                                image={`storage/${value.gambar}`}
+                                                key={index}
+                                                bodyClassName=" text-black/50 flex-1"
+                                                footerClassName="bg-slate-800"
+                                                className="flex flex-col"
+                                                footer={
+                                                    <Link
+                                                        href={route(
+                                                            "user.destinasi.show",
                                                             {
-                                                                label: "Like",
-                                                                variant:
-                                                                    "primary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Liked!"
-                                                                    ),
-                                                            },
-                                                            {
-                                                                label: "Share",
-                                                                variant:
-                                                                    "secondary",
-                                                                onClick: () =>
-                                                                    alert(
-                                                                        "Shared!"
-                                                                    ),
-                                                            },
-                                                        ]}
+                                                                destinasi:
+                                                                    value.id,
+                                                            }
+                                                        )}
+                                                        className="underline hover:text-blue-600"
                                                     >
-                                                        <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                            {value.deskripsi}
-                                                        </p>
-                                                    </Card>
-                                                )
-                                            )
-                                        )}
+                                                        Read More
+                                                    </Link>
+                                                }
+                                                title={value.nama}
+                                                headerClassName="uppercase font-extrabold"
+                                            >
+                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                    {value.deskripsi}
+                                                </p>
+                                            </Card>
+                                        ))}
                                 </div>
                             </div>
                         )}

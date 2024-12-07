@@ -8,7 +8,7 @@ const SideBar = () => {
         setShowDropdown((prevState) => !prevState);
     };
     return (
-        <div className="flex flex-col w-64 min-h-screen bg-gray-800 text-white overflow-hidden box-border">
+        <div className="flex flex-col w-64 min-h-screen bg-gray-800 text-white overflow-hidden box-border border-r-8 border-slate-900">
             {/* Logo */}
             <div className="flex items-center justify-center h-16  font-bold text-xl">
                 Admin Panel
@@ -124,7 +124,7 @@ const SideBar = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        href={route("admin.pengunjung")}
+                                        href={route("admin.pengunjung.index")}
                                         className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
                                     >
                                         <span className="material-icons">
@@ -223,7 +223,7 @@ const SideBar = () => {
                     <span className="ml-3">Tools</span>
                 </Link>
                 <Link
-                    href="/admin/post"
+                    href={route("admin.post.index")}
                     className="flex items-center px-4 py-4 text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                     <span className="material-icons">

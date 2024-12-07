@@ -10,7 +10,7 @@ const FormInput = ({
     options = [],
     error = null,
     required = false,
-    checked = false, // Untuk checkbox/radio
+    checked = false,
 }) => {
     return (
         <div className="flex flex-col space-y-2">
