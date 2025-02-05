@@ -1,23 +1,54 @@
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
+import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 
 export default function Index({ hotel, destinasi }) {
     const [search, setSearch] = useState("");
     const { data: hotels, links: hotelLinks } = hotel;
     const { data: destinasis, links: destinasiLinks } = destinasi;
-
+    const { flash } = usePage().props;
+    const message = flash.message;
     const handleSearchChange = (e) => setSearch(e.target.value);
-
-    const handleDelete = (id) => {
+    console.log(hotels);
+    const handleDelete = (id, type) => {
         if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            router.delete(route("admin.hotel.destroy", id), {
-                onSuccess: () => {
-                    alert("Data berhasil dihapus.");
-                },
-                onError: (error) => {
-                    alert("Terjadi kesalahan saat menghapus data.");
-                },
-            });
+            console.log(id, type);
+            if (type === "hotel") {
+                router.delete(
+                    route("admin.hotel.destroy", id),
+                    {
+                        onSuccess: () => {
+                            enqueueSnackbar(message, {
+                                variant: "success",
+                                autoHideDuration: 3000,
+                            });
+                        },
+                        onError: (error) => {
+                            alert("Terjadi kesalahan saat menghapus data.");
+                        },
+                    },
+                    {
+                        preserveScroll: true,
+                        preserveState: true,
+                    }
+                );
+            } else {
+                router.delete(
+                    route("admin.destinasi.destroy", id),
+                    {
+                        onSuccess: () => {
+                            alert("Data Destinasi berhasil dihapus");
+                        },
+                        onError: (e) => {
+                            alert("Terjadi kesalahan saat menghapus data." + e);
+                        },
+                    },
+                    {
+                        preserveScroll: true,
+                        preserveState: true,
+                    }
+                );
+            }
         }
     };
 
@@ -102,77 +133,96 @@ export default function Index({ hotel, destinasi }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {hotels.map((hotel, index) => {
-                                        const harga = JSON.parse(hotel.harga);
-                                        return (
-                                            <tr
-                                                key={index}
-                                                className="even:bg-gray-700 capitalize"
-                                            >
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {hotel.id}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {hotel.nama}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {hotel.klasifikasi_format}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {hotel.kapasitas_kamar}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {harga.min}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {harga.max}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {hotel.gambar ? (
-                                                        <img
-                                                            src={`/storage/${hotel.gambar}`}
-                                                            path={hotel.gambar}
-                                                        ></img>
-                                                    ) : (
-                                                        "tidak ada"
-                                                    )}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {hotel.lokasi}
-                                                </td>
-                                                <td
-                                                    className="border-2 border-gray-500 px-4 py-2
-                                                    truncate sm:text-wrap sm:min-w-80  max-w-52 min-h-52 hover:text-wrap hover:overflow-auto will-change-scroll "
+                                    {hotels.length > 0 ? (
+                                        (console.log(hotels.length >= 1),
+                                        hotels.map((hotel, index) => {
+                                            const harga = JSON.parse(
+                                                hotel.harga
+                                            );
+                                            return (
+                                                <tr
+                                                    key={index}
+                                                    className="even:bg-gray-700 capitalize"
                                                 >
-                                                    {hotel.deskripsi}
-                                                </td>
-                                                <td className="border-2 border-gray-500 px-4 py-2  ">
-                                                    <div className="flex gap-2">
-                                                        <button className="text-white  px-4 rounded-xl bg-blue-600 border-2 hover:bg-blue-700">
-                                                            <Link
-                                                                href={route(
-                                                                    "admin.hotel.edit",
-                                                                    [hotel.id]
-                                                                )}
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {hotel.id}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {hotel.nama}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {hotel.klasifikasi}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {hotel.kapasitas_kamar}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {harga.min}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {harga.max}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {hotel.gambar ? (
+                                                            <img
+                                                                src={`/storage/${hotel.gambar}`}
+                                                                path={
+                                                                    hotel.gambar
+                                                                }
+                                                            ></img>
+                                                        ) : (
+                                                            "tidak ada"
+                                                        )}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2">
+                                                        {hotel.lokasi}
+                                                    </td>
+                                                    <td
+                                                        className="border-2 border-gray-500 px-4 py-2
+                                                    truncate sm:text-wrap sm:min-w-80  max-w-52 min-h-52 hover:text-wrap hover:overflow-auto will-change-scroll "
+                                                    >
+                                                        {hotel.deskripsi}
+                                                    </td>
+                                                    <td className="border-2 border-gray-500 px-4 py-2  ">
+                                                        <div className="flex gap-2">
+                                                            <button className="text-white  px-4 rounded-xl bg-blue-600 border-2 hover:bg-blue-700">
+                                                                <Link
+                                                                    href={route(
+                                                                        "admin.hotel.edit",
+                                                                        [
+                                                                            hotel.id,
+                                                                        ]
+                                                                    )}
+                                                                >
+                                                                    Edit
+                                                                </Link>
+                                                            </button>
+                                                            <button
+                                                                className="text-black rounded-xl px-2 bg-red-700 border-2 border-gray-500"
+                                                                onClick={() =>
+                                                                    handleDelete(
+                                                                        hotel.id,
+                                                                        "hotel"
+                                                                    )
+                                                                }
                                                             >
-                                                                Edit
-                                                            </Link>
-                                                        </button>
-                                                        <button
-                                                            className="text-black rounded-xl px-2 bg-red-700 border-2 border-gray-500"
-                                                            onClick={() =>
-                                                                handleDelete(
-                                                                    hotel.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        }))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan={10}
+                                                className="border-2 border-gray-500 px-4 py-2 text-center"
+                                            >
+                                                Data tidak tersedia
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -258,9 +308,7 @@ export default function Index({ hotel, destinasi }) {
                                                     {destinasi.nama}
                                                 </td>
                                                 <td className="border-2 border-gray-500 px-4 py-2">
-                                                    {
-                                                        destinasi.klasifikasi_format
-                                                    }
+                                                    {destinasi.klasifikasi}
                                                 </td>
 
                                                 <td className="border-2 border-gray-500 px-4 py-2">
@@ -287,7 +335,6 @@ export default function Index({ hotel, destinasi }) {
                                                 </td>
                                                 <td className="border-2 lowercase border-gray-500 px-4 py-2">
                                                     {destinasi.google_map}
-                                                    {console.log(destinasi)}
                                                 </td>
                                                 <td
                                                     className="border-2 border-gray-500 px-4 py-2
@@ -313,7 +360,8 @@ export default function Index({ hotel, destinasi }) {
                                                             className="text-black rounded-xl px-2 bg-red-700 border-2 border-gray-500"
                                                             onClick={() =>
                                                                 handleDelete(
-                                                                    hotel.id
+                                                                    destinasi.id,
+                                                                    "destinasi"
                                                                 )
                                                             }
                                                         >

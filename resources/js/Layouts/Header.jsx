@@ -32,29 +32,12 @@ const Header = ({ auth }) => {
                             >
                                 Industri Pariwisata
                             </Link>
-                            <Link
-                                href="/berita"
-                                className="text-white hover:text-blue-600 rounded-xl  p-2 shadow-xl border-transparent "
-                            >
-                                Berita
-                            </Link>
+
                             <Link
                                 href="/profil"
                                 className="text-white hover:text-blue-600 rounded-xl  p-2 shadow-xl border-transparent "
                             >
                                 Profil
-                            </Link>
-                            <Link
-                                href="/tentang-kami"
-                                className="text-white hover:text-blue-600 rounded-xl  p-2 shadow-xl border-transparent "
-                            >
-                                Tentang Kami
-                            </Link>
-                            <Link
-                                href="/kontak"
-                                className="text-white hover:text-blue-600 rounded-xl  p-2 shadow-xl border-transparent "
-                            >
-                                Kontak
                             </Link>
 
                             {auth?.user ? (
@@ -76,12 +59,12 @@ const Header = ({ auth }) => {
                                     >
                                         Log in
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href={route("register")}
                                         className="rounded-md px-3 py-2 text-white hover:text-blue-700"
                                     >
                                         Register
-                                    </Link>
+                                    </Link> */}
                                 </>
                             )}
                         </div>
@@ -98,7 +81,7 @@ const Header = ({ auth }) => {
 
                     {/* Dropdown for mobile view */}
                     {isDropdownOpen && (
-                        <div className="md:hidden absolute top-14 left-0 right-0 backdrop-filter   backdrop-blur-2xl  rounded-b-2xl overflow-hidden border-current z-10">
+                        <div className="md:hidden absolute top-14 left-0 right-0 backdrop-filter   backdrop-brightness-90 backdrop-blur-xl bg-black  rounded-b-2xl overflow-hidden border-current z-10">
                             <Link
                                 href="/destinasi"
                                 className="block text-white hover:text-blue-600 border-b p-2"

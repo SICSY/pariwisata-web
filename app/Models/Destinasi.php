@@ -9,7 +9,7 @@ class Destinasi extends Model
 {
     use HasFactory;
     protected $table = 'destinasi';
-    protected $appends = ['klasifikasi_format'];
+
 
     protected $fillable = [
         'nama',
@@ -23,28 +23,9 @@ class Destinasi extends Model
 
     ];
 
-    public function getKlasifikasiFormatAttribute()
-    {
-
-        $klasifikasiMapping = [
-            0 => 'Destinasi',
-            1 => 'Destinasi & Water Boom',
-            2 => 'Budaya',
-            3 => 'Buatan',
-            4 => 'Alam',
-        ];
-        return $klasifikasiMapping[$this->klasifikasi] ?? 'Not Found';
-    }
-    public function kontenViews()
-    {
-        return $this->hasMany(KontenView::class, 'destinasi_id');
-    }
 
 
-    public function dataPengunjung()
-    {
-        return $this->morphMany(DataPengunjung::class, 'related');
-    }
+
 
 
 }

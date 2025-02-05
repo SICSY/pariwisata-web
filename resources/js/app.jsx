@@ -20,6 +20,7 @@ createInertiaApp({
             horizontal: "right",
             vertical: "top",
         };
+
         if (import.meta.env.SSR) {
             hydrateRoot(
                 el,

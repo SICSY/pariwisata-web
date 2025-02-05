@@ -452,27 +452,6 @@ const StudioBackground = () => {
                         position={[0, 0, 0]}
                         rotation={[Math.PI / 2, 0, 0]}
                     />
-                    <Html
-                        as="div"
-                        sprite
-                        occlude
-                        transform
-                        center
-                        position={[0, -0.8, 0.5]}
-                        receiveShadow
-                        onOcclude={set}
-                        style={{
-                            transition: "all 0.5s",
-                            opacity: hidden ? 0 : 1,
-                            transform: `scale(${hidden ? 0.5 : 1})`,
-                        }}
-                    >
-                        <span className="text-2xl font-extrabold text-white">
-                            <div style={{ transform: "scale(2)" }}>
-                                Dinas Pariwisata Kab Cirebon
-                            </div>
-                        </span>
-                    </Html>
                 </Dodecahedron>
             </context.Provider>
 

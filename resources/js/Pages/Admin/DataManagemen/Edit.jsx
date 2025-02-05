@@ -45,6 +45,7 @@ const Edit = ({
             max: harga.max || "",
         },
         gambar: "",
+        google_map: editDataDestinasi.google_map || "",
         deskripsi: editDataDestinasi.deskripsi || "",
         lokasi: editDataDestinasi.lokasi || "",
     });
@@ -58,7 +59,7 @@ const Edit = ({
                 route("admin.hotel.update", editDataHotel.id),
                 {
                     ...hotelData,
-                    _method: "PUT",
+                    _method: "PATCH",
                 },
                 {
                     onSuccess: () => {
@@ -70,7 +71,6 @@ const Edit = ({
                     onError: (e) => {
                         setPesan("Error: Hotel data Submitted & Edit error");
                         resetHotel();
-                        console.log(e);
                     },
                 }
             );
@@ -79,7 +79,7 @@ const Edit = ({
                 route("admin.destinasi.update", editDataDestinasi.id),
                 {
                     ...destinasiData,
-                    _method: "PUT",
+                    _method: "PATCH",
                 },
                 {
                     onSuccess: () => {
@@ -147,19 +147,24 @@ const Edit = ({
     };
     useEffect(() => {
         if (pesan) {
-            setShow(true); // Menampilkan pesan
+            setShow(true);
             const timer = setTimeout(() => {
-                setShow(false); // Menyembunyikan pesan setelah 3 detik
-            }, 3000); // Durasi 3000ms = 3 detik
+                setShow(false);
+            }, 3000);
 
             return () => clearTimeout(timer); // Membersihkan timer saat komponen unmount atau pesan hilang
         }
     }, [pesan]);
-
+    console.log(hotelData.klasifikasi);
+    console.log(destinasiData.klasifikasi);
+    console.log(destinasiData);
     return (
-        <div lenis-data-prevent className="flex w-full  h-screen relative ">
+        <div
+            lenis-data-prevent
+            className="flex w-full  bg-[#111827]  h-screen items-center justify-center relative "
+        >
             {show && pesan && (
-                <div className="absolute left-2/4 right-2/4 w-min-fit h-fit   flex items-center justify-center bg-gray-800 bg-opacity-50 duration-1000">
+                <div className="absolute left-2/4 right-2/4 w-min-fit h-fit   flex items-center justify-center  bg-gray-800 bg-opacity-50 duration-1000">
                     <div
                         className={`text-white px-6 py-4 rounded-lg transition-all ${
                             pesan.includes("Error")
@@ -171,7 +176,7 @@ const Edit = ({
                     </div>
                 </div>
             )}
-            <div className="w-full p-4  bg-gray-800 text-white">
+            <div className="w-fit border-2 border-white/20  rounded-xl p-4  bg-gray-800 text-white">
                 <div className="container max-w-xs sm:max-w-screen-sm justify-self-center">
                     <Link
                         onClick={() => window.history.back()}
@@ -259,23 +264,37 @@ const Edit = ({
                                 </option>
                                 {menu === "hotel" && (
                                     <>
-                                        <option value="0">Non Bintang</option>
-                                        <option value="1">Bintang 1</option>
-                                        <option value="2">Bintang 2</option>
-                                        <option value="3">Bintang 3</option>
-                                        <option value="4">Bintang 4</option>
-                                        <option value="5">Bintang 5</option>
+                                        <option value="Non Bintang">
+                                            Non Bintang
+                                        </option>
+                                        <option value="Bintang 1">
+                                            Bintang 1
+                                        </option>
+                                        <option value="Bintang 2">
+                                            Bintang 2
+                                        </option>
+                                        <option value="Bintang 3">
+                                            Bintang 3
+                                        </option>
+                                        <option value="Bintang 4">
+                                            Bintang 4
+                                        </option>
+                                        <option value="Bintang 5">
+                                            Bintang 5
+                                        </option>
                                     </>
                                 )}
                                 {menu === "destinasi" && (
                                     <>
-                                        <option value="0">Destinasi </option>
-                                        <option value="1">
+                                        <option value="Destinasi">
+                                            Destinasi
+                                        </option>
+                                        <option value="Destinasi & Water Boom">
                                             Destinasi & Water Boom
                                         </option>
-                                        <option value="2">Budaya</option>
-                                        <option value="3">Buatan</option>
-                                        <option value="4">Alam</option>
+                                        <option value="Budaya">Budaya</option>
+                                        <option value="Buatan">Buatan</option>
+                                        <option value="Alam">Alam</option>
                                     </>
                                 )}
                             </select>
@@ -576,6 +595,26 @@ const Edit = ({
                                         }
                                     />
                                 </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="google_map"
+                                        className="block text-sm"
+                                    >
+                                        Google Maps
+                                    </label>
+                                    <input
+                                        type="url"
+                                        id="google_map"
+                                        className="border text-black px-4 py-2 w-full"
+                                        value={destinasiData.google_map}
+                                        onChange={(e) =>
+                                            setDestinasiData({
+                                                ...destinasiData,
+                                                google_map: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
                                 <div lenis-data-prevent className="mb-4">
                                     <label
                                         htmlFor="deskripsi"
@@ -599,12 +638,14 @@ const Edit = ({
                                 </div>
                             </>
                         )}
-                        <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded"
-                        >
-                            Submit
-                        </button>
+                        <div className="flex justify-end w-full ">
+                            <button
+                                type="submit"
+                                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded   w-fit"
+                            >
+                                Submit
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

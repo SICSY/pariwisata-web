@@ -14,6 +14,7 @@ const Card = ({
     footer = null,
     footerClassName = "",
     actions = [],
+
     ...rest
 }) => {
     return (
@@ -56,7 +57,7 @@ const Card = ({
 
             <div className={clsx("px-6 py-4", bodyClassName)}>{children}</div>
 
-            {(footer || actions.length > 0) && (
+            {footer && (
                 <div
                     className={clsx(
                         "px-6 py-4 border-t border-gray-200 flex items-center justify-between",
@@ -64,24 +65,6 @@ const Card = ({
                     )}
                 >
                     {footer}
-                    {actions.length > 0 && (
-                        <div className="space-x-2">
-                            {actions.map((action, index) => (
-                                <button
-                                    key={index}
-                                    className={clsx(
-                                        "px-4 py-2 text-sm rounded-lg shadow-sm focus:outline-none transition",
-                                        action.variant === "primary"
-                                            ? "bg-blue-500 text-white hover:bg-blue-600"
-                                            : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                                    )}
-                                    onClick={action.onClick}
-                                >
-                                    {action.label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
                 </div>
             )}
         </div>

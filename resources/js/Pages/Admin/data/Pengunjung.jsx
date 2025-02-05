@@ -48,9 +48,6 @@ export default function Pengunjung({ data }) {
                         >
                             Kembali
                         </Link>
-                        <h1 className="text-2xl font-bold">
-                            Manajemen Data Pariwisata
-                        </h1>
                     </div>
                 </header>
 
@@ -59,7 +56,7 @@ export default function Pengunjung({ data }) {
                     {/* Search and Add Button */}
 
                     {/* Table */}
-                    <section>
+                    <section className="  bg-gray-800 rounded-lg p-4">
                         <h2 className="text-xl font-semibold mb-4 text-center text-gray-300">
                             Data Pengunjung
                         </h2>

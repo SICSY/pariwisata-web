@@ -1,53 +1,70 @@
-import React from "react";
+import Tabel from "@/Layouts/Tabel";
+import { Head, Link } from "@inertiajs/react";
 
-const Destinasi = ({ data }) => {
+export default function Destinasi({ data }) {
+    console.log(data);
+    const columns = [
+        {
+            header: "No",
+            accessorKey: "id",
+        },
+        {
+            header: "Status",
+            accessorKey: "role",
+        },
+        {
+            header: "Total",
+            accessorKey: "total_pengunjung",
+        },
+
+        {
+            header: "di Buat",
+            accessorKey: "created_at",
+            Cell: ({ cell }) => {
+                const date = new Date(cell.getValue());
+                return date.toLocaleDateString("id-ID");
+            },
+        },
+        {
+            header: "di Ubah",
+            accessorKey: "updated_at",
+            Cell: ({ cell }) => {
+                const date = new Date(cell.getValue());
+                return date.toLocaleDateString("id-ID");
+            },
+        },
+    ];
+
     return (
-        <div className="overflow-x-auto">
-            <table
-                data-lenis-prevent
-                className="table-auto min-w-full bg-white border border-gray-200 text-black"
-            >
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="px-4 py-2 border-b">ID</th>
-                        <th className="px-4 py-2 border-b">Nama</th>
-                        <th className="px-4 py-2 border-b">Klasifikasi</th>
-                        <th className="px-4 py-2 border-b">Harga</th>
+        <>
+            <Head title="Manajemen Data Destinasi" />
+            <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+                {/* Header */}
+                <header className="bg-gray-800 text-white p-4 shadow-md">
+                    <div className="container mx-auto flex justify-between items-center">
+                        <Link
+                            href={route("admin.dashboard")}
+                            className="text-sm text-blue-300 hover:underline"
+                        >
+                            Kembali
+                        </Link>
+                    </div>
+                </header>
 
-                        <th className="px-4 py-2 border-b">Deskripsi</th>
-                        <th className="px-4 py-2 border-b">Lokasi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((destinasi) => (
-                        <tr key={destinasi.id}>
-                            <td className="px-4 py-2 border-b">
-                                {destinasi.id}
-                            </td>
-                            <td className="px-4 py-2 border-b">
-                                {destinasi.nama}
-                            </td>
-                            <td className="px-4 py-2 border-b">
-                                {destinasi.klasifikasi}
-                            </td>
-                            <td className="px-4 py-2 border-b">
-                                {destinasi.harga.toLocaleString("id-ID", {
-                                    style: "currency",
-                                    currency: "IDR",
-                                })}
-                            </td>
-                            <td className="px-4 py-2 border-b">
-                                {destinasi.deskripsi}
-                            </td>
-                            <td className="px-4 py-2 border-b">
-                                {destinasi.lokasi}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                {/* Main Content */}
+                <main className="container mx-auto px-4 py-6 flex flex-col gap-8">
+                    {/* Search and Add Button */}
+
+                    {/* Table */}
+                    <section className="  bg-gray-800 rounded-lg p-4">
+                        <h2 className="text-xl font-semibold mb-4 text-center text-gray-300">
+                            Data Destinasi
+                        </h2>
+                        <Tabel columns={columns} data={data} />{" "}
+                        {/* Menggunakan DataTable yang sudah dipisahkan */}
+                    </section>
+                </main>
+            </div>
+        </>
     );
-};
-
-export default Destinasi;
+}

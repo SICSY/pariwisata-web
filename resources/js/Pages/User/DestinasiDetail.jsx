@@ -1,3 +1,4 @@
+import { Head } from "@inertiajs/react";
 import React from "react";
 
 const DestinasiDetail = ({ destinasi }) => {
@@ -6,6 +7,7 @@ const DestinasiDetail = ({ destinasi }) => {
 
     return (
         <div className="min-h-screen bg-slate-900 text-white py-10 px-5">
+            <Head title="Destinasi Detail"></Head>
             {/* Main Container */}
             <div className="max-w-5xl mx-auto bg-slate-800 rounded-lg shadow-lg overflow-hidden">
                 {/* Header Section */}

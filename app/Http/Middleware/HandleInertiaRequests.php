@@ -45,9 +45,6 @@ class HandleInertiaRequests extends Middleware
             'detinasi' => [
                 'all' => \App\Models\Destinasi::all(),
             ],
-            'kunjungan' => [
-                'all' => \App\Models\DataPengunjung::with('related')->get(),
-            ],
             'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

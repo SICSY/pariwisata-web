@@ -13,11 +13,10 @@ use Inertia\Inertia;
 class HomeController extends Controller
 {
 
-    public function dataIndex()
+    public function Index()
     {
 
         $hotel = Hotel::where('id', 1)->first();
-        $kontenView = KontenView::where('id', 1)->first();
         $destinasi = Destinasi::where('id', 1)->first();
         $user = User::where('id', 1)->first();
 
@@ -25,7 +24,6 @@ class HomeController extends Controller
 
         return Inertia::render('Welcome', [
             'hotel' => $hotel,
-            'kontenView' => $kontenView,
             'destinasi' => $destinasi,
             'user' => $user,
             'canLogin' => Route::has('login'),

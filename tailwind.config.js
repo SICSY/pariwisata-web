@@ -15,6 +15,7 @@ export default {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
                 roboto: ["Roboto Condensed", "sans-serif"],
+                ubuntu: "Ubuntu",
             },
             textColor: {
                 primary: "#ff6a00", // Example primary color

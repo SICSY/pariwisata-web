@@ -13,10 +13,17 @@ return new class extends Migration {
         Schema::create('hotel', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
-            $table->tinyInteger('klasifikasi')->comment('0: Non Bintang, 1: Bintang 1, ..., 5: Bintang 5');
+            $table->enum('klasifikasi', [
+                'Non Bintang',
+                'Bintang 1',
+                'Bintang 2',
+                'Bintang 3',
+                'Bintang 4',
+                'Bintang 5',
+            ]);
             $table->integer('kapasitas_kamar');
             $table->text('deskripsi');
-            $table->text(column: 'gambar')->nullable();
+            $table->text('gambar')->nullable();
             $table->string('lokasi');
             $table->json('harga');
 

@@ -45,16 +45,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function dataKontenView()
-    {
-
-        $data = KontenView::with(['user', 'hotel', 'destinasi'])->get();
-
-        return Inertia::render('Admin/KontenView', [
-            'data' => $data
-        ]);
-    }
-
     public function dataPengunjung()
     {
 

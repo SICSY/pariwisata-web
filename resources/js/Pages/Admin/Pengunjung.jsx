@@ -6,7 +6,6 @@ import SideBar from "@/Components/SideBar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
 
-import KontenView from "./data/Kontenview";
 import Pengunjung from "./data/Pengunjung";
 
 export default function Data() {

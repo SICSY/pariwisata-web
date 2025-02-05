@@ -5,8 +5,10 @@
 import StudioBackground from "@/Components/StudioBackground";
 import Header from "@/Layouts/Header";
 import { Head, Link, usePage } from "@inertiajs/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Footer from "@/Components/Footer";
+import Section1 from "./User/partial/section1";
+import Spline from "@splinetool/react-spline";
 export default function Welcome({ auth }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isUserInteracting, setIsUserInteracting] = useState(false);
@@ -86,7 +88,7 @@ export default function Welcome({ auth }) {
             {/* Main Content Area */}
             <main>
                 {/* First Section */}
-                <section className="   py-1 w-full  min-h-fit flex-col flex m-0 p-0 left-0 box-border md:min-h-full  overflow-hidden">
+                <section className="   w-full  min-h-fit flex-col flex m-0 p-0 left-0 box-border md:min-h-full  overflow-hidden">
                     <div className="flex md:flex-row  flex-col">
                         <div className="container mx-auto text-center sm:h-[50vh] h-full w-full sm:flex-1  md:items-center self-justify-center flex flex-col relative md:top-32 ">
                             <h1
@@ -217,7 +219,7 @@ export default function Welcome({ auth }) {
                     </div>
                 </section>
 
-                <section className="gap-4  relative h-full w-full overflow-hidden p-4 md:p-20  ">
+                {/* <section className="gap-4  relative h-full w-full overflow-hidden p-4 md:p-20  ">
                     <div className="flex">
                         <p className=" flex w-full md:max-w-[1300px] relative self-center  md:left-0  xl:text-4xl text-xs md:text-2xl mb-3 italic font-serif  text-start px-2    opacity-70  text-white tracking-tighter">
                             Temukan keindahan warisan budaya kami dan jelajahi
@@ -282,23 +284,40 @@ export default function Welcome({ auth }) {
                     </div>
 
                     <div className="text-white">halo</div>
-                </section>
-
+                </section> */}
                 {/* <section>
                     <DataChart></DataChart>
                 </section> */}
+
                 <section className=" text-white relative   flex   h-[100vh] w-full items-center justify-center bg-gradient-to-b from-cyan-600/40 to-[#020717]">
                     <div className="absolute top-0 left-0 w-full h-full ">
                         <StudioBackground></StudioBackground>
                     </div>
 
-                    <div className=" border  ">
+                    <div>
                         <p className="z-20">halo</p>
                     </div>
 
-                    <footer className="border w-full h-1/5 absolute bottom-0 text-center">
-                        halo
+                    <footer className="border w-full  absolute bottom-0 text-center h-fit">
+                        <div className="flex flex-wrap  w-full h-full p-2 container mx-auto gap-2   rounded-lg">
+                            <h1 className="flex-[1]    text-left px-10  text-white/80 font-ubuntu  xl:text-6xl  rounded-lg">
+                                Temukan Keindahan Alam <span>& </span>
+                                <p className="text-2xl">
+                                    Pariwisata Kabupaten Cirebon Disini
+                                </p>
+                            </h1>
+                            <h1 className="flex-[1] ">
+                                Temukan Keindahan Alam dan Pariwisata Indonesia
+                                Disini
+                            </h1>
+                        </div>
                     </footer>
+                </section>
+                {/* <Section1></Section1> */}
+                <section className="bg-black/20 w-full h-screen">
+                    <Suspense>
+                        <Spline scene="https://prod.spline.design/zL8Xk2exC27Xc9eg/scene.splinecode" />
+                    </Suspense>
                 </section>
                 <Footer></Footer>
             </main>

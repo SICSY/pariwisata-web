@@ -1,19 +1,21 @@
 import Card from "@/Components/Card";
+import Footer from "@/Components/Footer";
 import Header from "@/Layouts/Header";
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
 
 const Destinasi = ({ destinasi, auth }) => {
     let [idDestinasi, setidDestinasi] = useState("destinasi-destinasi");
 
     return (
-        <>
+        <main className="max-h-screen w-full ">
             <div className="min-h-full mx-auto max-w-screen-2xl  rounded-b-xl sticky top-0 z-50 backdrop-blur-xl backdrop-brightness-[0.5] border-white/20 border">
                 {/* Navbar */}
                 <Header auth={auth}></Header>
+                <Head title="Destinasi"></Head>
             </div>
 
-            <div className="w-full h-full ">
+            <div className="">
                 {/* Header */}
 
                 <section
@@ -33,7 +35,7 @@ const Destinasi = ({ destinasi, auth }) => {
                 <header className="relative flex w-full bg-black bg-opacity-75 z-10">
                     <nav className="justify-center w-full p-4 items-center flex">
                         <div
-                            className="flex space-x-7 relative overflow-x-auto md:overflow-clip whitespace-nowrap w-[80%] left-0 -tracking-wider transition-all scroll-smooth"
+                            className="flex space-x-7 relative overflow-x-auto md:overflow-clip whitespace-nowrap w-[80%] left-0  -tracking-wider transition-all scroll-smooth  items-start justify-start md:items-center md:justify-center"
                             style={{
                                 scrollbarWidth: "thin",
                             }}
@@ -47,10 +49,10 @@ const Destinasi = ({ destinasi, auth }) => {
                             ].map((destinasi) => (
                                 <button
                                     key={destinasi}
-                                    className={`text-orange-500 font-bold font-sm md:text-base transition-all  capitalize ${
+                                    className={`text-white font-bold font-sm md:text-base transition-all  capitalize  px-2 rounded-xl bg-red-700 ${
                                         idDestinasi === destinasi
-                                            ? "text-orange-800 underline"
-                                            : "hover:text-orange-800 "
+                                            ? "text-white/50 cursor-not-allowed"
+                                            : "hover:text-white/50 "
                                     }`}
                                     onClick={() => setidDestinasi(destinasi)} // Set tombol aktif
                                 >
@@ -62,184 +64,198 @@ const Destinasi = ({ destinasi, auth }) => {
                         </div>
                     </nav>
                 </header>
-                {/* Section */}
-                <section className="w-full py-8 ">
-                    <div className="container mx-auto text-white">
-                        {/* Destinasi  Section */}
-                        {idDestinasi === "destinasi-destinasi" && (
-                            <div className="mb-8" id="destinasi-destinasi">
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
-                                    {destinasi
-                                        .filter(
-                                            (value) =>
-                                                value.klasifikasi_format ===
-                                                "Destinasi"
-                                        )
-                                        .map((value, index) => (
-                                            <Card
-                                                image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                                key={index}
-                                                bodyClassName=" text-black/50 flex-1 "
-                                                footerClassName="bg-slate-800 "
-                                                className="flex flex-col "
-                                                footer={
-                                                    <Link
-                                                        href={route(
-                                                            "user.destinasi.show",
-                                                            {
-                                                                destinasi:
-                                                                    value.id,
-                                                            }
-                                                        )}
-                                                        className="underline hover:text-blue-600"
-                                                    >
-                                                        Read More
-                                                    </Link>
-                                                }
-                                                title={value.nama}
-                                                headerClassName="uppercase font-extrabold"
-                                            >
-                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                    {value.deskripsi}
-                                                </p>
-                                            </Card>
-                                        ))}
+                <main className="flex  flex-col justify-between  w-full h-screen border-t-2 border-red-500  bg-black">
+                    {/* Section */}
+                    <section className="w-full py-8 ">
+                        <div className="container mx-auto text-white">
+                            {/* Destinasi  Section */}
+                            {idDestinasi === "destinasi-destinasi" && (
+                                <div className="mb-8" id="destinasi-destinasi">
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
+                                        {destinasi
+                                            .filter(
+                                                (value) =>
+                                                    value.klasifikasi_format ===
+                                                    "Destinasi"
+                                            )
+                                            .map((value, index) => (
+                                                <Card
+                                                    image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                                    key={index}
+                                                    bodyClassName=" text-black/50 flex-1 "
+                                                    footerClassName="bg-slate-800 "
+                                                    className="flex flex-col "
+                                                    footer={
+                                                        <Link
+                                                            href={route(
+                                                                "user.destinasi.show",
+                                                                {
+                                                                    destinasi:
+                                                                        value.id,
+                                                                }
+                                                            )}
+                                                            className="underline hover:text-blue-600"
+                                                        >
+                                                            Read More
+                                                        </Link>
+                                                    }
+                                                    title={value.nama}
+                                                    headerClassName="uppercase font-extrabold"
+                                                >
+                                                    <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                        {value.deskripsi}
+                                                    </p>
+                                                </Card>
+                                            ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
-                        {/* Destinasi WaterBoom  Section */}
-                        {idDestinasi === "destinasi-kolam-renang" && (
-                            <div className="mb-8" id="destinasi-kolam-renang">
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
-                                    {destinasi
-                                        .filter(
-                                            (value) =>
-                                                value.klasifikasi_format ===
-                                                "Destinasi & Water Boom"
-                                        )
-                                        .map((value, index) => (
-                                            <Card
-                                                image={`storage/${value.gambar}`}
-                                                key={index}
-                                                bodyClassName="  text-black/50 flex-10"
-                                                footerClassName="bg-slate-800"
-                                                className="flex flex-col "
-                                                footer={
-                                                    <Link
-                                                        href={route(
-                                                            "user.destinasi.show",
-                                                            {
-                                                                destinasi:
-                                                                    value.id,
+                            {/* Destinasi WaterBoom  Section */}
+                            {idDestinasi === "destinasi-kolam-renang" && (
+                                <div
+                                    className="mb-8"
+                                    id="destinasi-kolam-renang"
+                                >
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
+                                        {destinasi
+                                            .filter(
+                                                (value) =>
+                                                    value.klasifikasi_format ===
+                                                    "Destinasi & Water Boom"
+                                            )
+                                            .map(
+                                                (value, index) => (
+                                                    console.log(value),
+                                                    (
+                                                        <Card
+                                                            image={`storage/${value.gambar}`}
+                                                            key={index}
+                                                            bodyClassName="  text-black/50 flex-10"
+                                                            footerClassName="bg-slate-800"
+                                                            className="flex flex-col "
+                                                            footer={
+                                                                <Link
+                                                                    href={route(
+                                                                        "user.destinasi.show",
+                                                                        {
+                                                                            destinasi:
+                                                                                value.id,
+                                                                        }
+                                                                    )}
+                                                                    className="underline hover:text-blue-600"
+                                                                >
+                                                                    Read More
+                                                                </Link>
                                                             }
-                                                        )}
-                                                        className="underline hover:text-blue-600"
-                                                    >
-                                                        Read More
-                                                    </Link>
-                                                }
-                                                title={value.nama}
-                                                headerClassName="uppercase font-extrabold"
-                                            >
-                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                    {value.deskripsi}
-                                                </p>
-                                            </Card>
-                                        ))}
+                                                            title={value.nama}
+                                                            headerClassName="uppercase font-extrabold"
+                                                        >
+                                                            <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                                {
+                                                                    value.deskripsi
+                                                                }
+                                                            </p>
+                                                        </Card>
+                                                    )
+                                                )
+                                            )}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
-                        {/* Destinasi Alam Section */}
-                        {idDestinasi === "destinasi-alam" && (
-                            <div className="mb-8" id="destinasi-alam">
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
-                                    {destinasi
-                                        .filter(
-                                            (value) =>
-                                                value.klasifikasi_format ===
-                                                "Alam"
-                                        )
-                                        .map((value, index) => (
-                                            <Card
-                                                image={`storage/${value.gambar}`}
-                                                key={index}
-                                                bodyClassName="  text-black/50 flex-10"
-                                                footerClassName="bg-slate-800"
-                                                className="flex flex-col"
-                                                footer={
-                                                    <Link
-                                                        href={route(
-                                                            "user.destinasi.show",
-                                                            {
-                                                                destinasi:
-                                                                    value.id,
-                                                            }
-                                                        )}
-                                                        className="underline hover:text-blue-600"
-                                                    >
-                                                        Read More
-                                                    </Link>
-                                                }
-                                                title={value.nama}
-                                                headerClassName="uppercase font-extrabold"
-                                            >
-                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                    {value.deskripsi}
-                                                </p>
-                                            </Card>
-                                        ))}
+                            {/* Destinasi Alam Section */}
+                            {idDestinasi === "destinasi-alam" && (
+                                <div className="mb-8" id="destinasi-alam">
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
+                                        {destinasi
+                                            .filter(
+                                                (value) =>
+                                                    value.klasifikasi_format ===
+                                                    "Alam"
+                                            )
+                                            .map((value, index) => (
+                                                <Card
+                                                    image={`storage/${value.gambar}`}
+                                                    key={index}
+                                                    bodyClassName="  text-black/50 flex-10"
+                                                    footerClassName="bg-slate-800"
+                                                    className="flex flex-col"
+                                                    footer={
+                                                        <Link
+                                                            href={route(
+                                                                "user.destinasi.show",
+                                                                {
+                                                                    destinasi:
+                                                                        value.id,
+                                                                }
+                                                            )}
+                                                            className="underline hover:text-blue-600"
+                                                        >
+                                                            Read More
+                                                        </Link>
+                                                    }
+                                                    title={value.nama}
+                                                    headerClassName="uppercase font-extrabold"
+                                                >
+                                                    <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                        {value.deskripsi}
+                                                    </p>
+                                                </Card>
+                                            ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
-                        {/* Destinasi Budaya Section */}
-                        {idDestinasi === "destinasi-budaya" && (
-                            <div className="mb-8" id="destinasi-budaya">
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
-                                    {destinasi
-                                        .filter(
-                                            (value) =>
-                                                value.klasifikasi_format ===
-                                                "Budaya"
-                                        )
-                                        .map((value, index) => (
-                                            <Card
-                                                image={`storage/${value.gambar}`}
-                                                key={index}
-                                                bodyClassName=" text-black/50 flex-1"
-                                                footerClassName="bg-slate-800"
-                                                className="flex flex-col"
-                                                footer={
-                                                    <Link
-                                                        href={route(
-                                                            "user.destinasi.show",
-                                                            {
-                                                                destinasi:
-                                                                    value.id,
-                                                            }
-                                                        )}
-                                                        className="underline hover:text-blue-600"
-                                                    >
-                                                        Read More
-                                                    </Link>
-                                                }
-                                                title={value.nama}
-                                                headerClassName="uppercase font-extrabold"
-                                            >
-                                                <p className="text-ellipsis overflow-hidden line-clamp-2">
-                                                    {value.deskripsi}
-                                                </p>
-                                            </Card>
-                                        ))}
+                            {/* Destinasi Budaya Section */}
+                            {idDestinasi === "destinasi-budaya" && (
+                                <div className="mb-8" id="destinasi-budaya">
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-2 text-sm">
+                                        {destinasi
+                                            .filter(
+                                                (value) =>
+                                                    value.klasifikasi_format ===
+                                                    "Budaya"
+                                            )
+                                            .map((value, index) => (
+                                                <Card
+                                                    image={`storage/${value.gambar}`}
+                                                    key={index}
+                                                    bodyClassName=" text-black/50 flex-1"
+                                                    footerClassName="bg-slate-800"
+                                                    className="flex flex-col"
+                                                    footer={
+                                                        <Link
+                                                            href={route(
+                                                                "user.destinasi.show",
+                                                                {
+                                                                    destinasi:
+                                                                        value.id,
+                                                                }
+                                                            )}
+                                                            className="underline hover:text-blue-600"
+                                                        >
+                                                            Read More
+                                                        </Link>
+                                                    }
+                                                    title={value.nama}
+                                                    headerClassName="uppercase font-extrabold"
+                                                >
+                                                    <p className="text-ellipsis overflow-hidden line-clamp-2">
+                                                        {value.deskripsi}
+                                                    </p>
+                                                </Card>
+                                            ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
-                </section>
+                            )}
+                        </div>
+                    </section>
+
+                    <Footer></Footer>
+                </main>
             </div>
-        </>
+        </main>
     );
 };
 

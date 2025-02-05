@@ -6,7 +6,9 @@ const Create = ({ menu: initialMenu }) => {
     const [pesan, setPesan] = useState(null);
     const [show, setShow] = useState(false);
     const { errors } = usePage().props;
+    const { flash } = usePage().props;
 
+    console.log(flash);
     const {
         data: hotelData,
         setData: setHotelData,
@@ -42,7 +44,7 @@ const Create = ({ menu: initialMenu }) => {
         gambar: "",
         deskripsi: "",
         lokasi: "",
-        google_maps: "",
+        google_map: "",
     });
 
     const handleSubmit = (e) => {
@@ -52,13 +54,17 @@ const Create = ({ menu: initialMenu }) => {
         if (menu === "hotel") {
             postHotel(route("admin.hotel.store"), {
                 onSuccess: () => {
-                    setPesan("Success: Hotel data  Submitted");
+                    setPesan(`Success : ${flash.message}`);
+                    console.log(hotelData);
                     resetHotel();
                 },
                 onError: () => {
                     setPesan(
                         errors
-                            ? "Error: " + JSON.stringify(errors.error)
+                            ? "Error: " +
+                                  JSON.stringify(
+                                      errors.error || "Lengkapi form"
+                                  )
                             : "Error: Hotel data not Submitted"
                     );
                 },
@@ -66,11 +72,20 @@ const Create = ({ menu: initialMenu }) => {
         } else {
             postDestinasi(route("admin.destinasi.store"), {
                 onSuccess: () => {
-                    setPesan("Success: Destinasi data  Submitted");
+                    setPesan(`Success : ${flash.message}`);
+                    console.log(destinasiData);
+
                     resetDestinasi();
                 },
                 onError: () => {
-                    setPesan("Error: Destinasi data not Submitted");
+                    setPesan(
+                        errors
+                            ? "Error: " +
+                                  JSON.stringify(
+                                      errors.error || "Lengkapi form"
+                                  )
+                            : "Error: Hotel data not Submitted"
+                    );
                 },
             });
         }
@@ -243,23 +258,39 @@ const Create = ({ menu: initialMenu }) => {
                                 </option>
                                 {menu === "hotel" && (
                                     <>
-                                        <option value="0">Non Bintang</option>
-                                        <option value="1">Bintang 1</option>
-                                        <option value="2">Bintang 2</option>
-                                        <option value="3">Bintang 3</option>
-                                        <option value="4">Bintang 4</option>
-                                        <option value="5">Bintang 5</option>
+                                        <option value={"Non Bintang"}>
+                                            Non Bintang
+                                        </option>
+                                        <option value={"Bintang 1"}>
+                                            Bintang 1
+                                        </option>
+                                        <option value={"Bintang 2"}>
+                                            Bintang 2
+                                        </option>
+                                        <option value={"Bintang 3"}>
+                                            Bintang 3
+                                        </option>
+                                        <option value={"Bintang 3"}>
+                                            Bintang 4
+                                        </option>
+                                        <option value={"Bintang 5"}>
+                                            Bintang 5
+                                        </option>
                                     </>
                                 )}
                                 {menu === "destinasi" && (
                                     <>
-                                        <option value="0">Destinasi </option>
-                                        <option value="1">
+                                        <option value={"Destinasi"}>
+                                            Destinasi
+                                        </option>
+                                        <option
+                                            value={"Destinasi & Water Boom"}
+                                        >
                                             Destinasi & Water Boom
                                         </option>
-                                        <option value="2">Budaya</option>
-                                        <option value="3">Buatan</option>
-                                        <option value="4">Alam</option>
+                                        <option value={"Budaya"}>Budaya</option>
+                                        <option value={"Buatan"}>Buatan</option>
+                                        <option value={"Alam"}>Alam</option>
                                     </>
                                 )}
                             </select>
@@ -694,20 +725,20 @@ const Create = ({ menu: initialMenu }) => {
                                 </div>
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="google_maps"
+                                        htmlFor="google_map"
                                         className="block text-sm"
                                     >
                                         Google Maps
                                     </label>
                                     <input
                                         type="url"
-                                        id="google_maps"
+                                        id="google_map"
                                         className="border text-black px-4 py-2 w-full"
-                                        value={destinasiData.google_maps}
+                                        value={destinasiData.google_map}
                                         onChange={(e) =>
                                             setDestinasiData({
                                                 ...destinasiData,
-                                                google_maps: e.target.value,
+                                                google_map: e.target.value,
                                             })
                                         }
                                     />

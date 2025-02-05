@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             // HotelSeeder::class,
 
             // DestinasiSeeder::class,
-            // DataPengunjungSeeder::class,
         ]);
     }
 }
