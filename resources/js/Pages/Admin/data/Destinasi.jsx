@@ -3,18 +3,51 @@ import { Head, Link } from "@inertiajs/react";
 
 export default function Destinasi({ data }) {
     console.log(data);
+    const hargaMax = Math.max(
+        ...data.map((hotel) => JSON.parse(hotel.harga).max)
+    );
+    const hargaMin = Math.min(
+        ...data.map((hotel) => JSON.parse(hotel.harga).min)
+    );
     const columns = [
         {
             header: "No",
             accessorKey: "id",
         },
         {
-            header: "Status",
-            accessorKey: "role",
+            header: "Nama",
+            accessorKey: "nama",
         },
         {
-            header: "Total",
-            accessorKey: "total_pengunjung",
+            header: "Gambar",
+            id: "gambar",
+            accessorFn: (row) => (
+                <img
+                    className="place-content-center w-20 h-20 flex place-self-center"
+                    src={`/storage/${row.gambar}`}
+                />
+            ),
+        },
+        {
+            header: "Klasifikasi",
+            accessorKey: "klasifikasi",
+        },
+        {
+            header: "Harga",
+            id: "harga",
+            accessorFn: (row) =>
+                `Rp ${hargaMin.toLocaleString(
+                    "id"
+                )} - Rp ${hargaMax.toLocaleString("id")}`,
+        },
+        {
+            header: "Lokasi",
+            accessorKey: "lokasi",
+        },
+
+        {
+            header: "Google Map",
+            accessorKey: "google_map",
         },
 
         {

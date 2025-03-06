@@ -258,22 +258,22 @@ const Create = ({ menu: initialMenu }) => {
                                 </option>
                                 {menu === "hotel" && (
                                     <>
-                                        <option value={"Non Bintang"}>
+                                        <option value="Non Bintang">
                                             Non Bintang
                                         </option>
-                                        <option value={"Bintang 1"}>
+                                        <option value="Bintang 1">
                                             Bintang 1
                                         </option>
-                                        <option value={"Bintang 2"}>
+                                        <option value="Bintang 2">
                                             Bintang 2
                                         </option>
-                                        <option value={"Bintang 3"}>
+                                        <option value="Bintang 3">
                                             Bintang 3
                                         </option>
-                                        <option value={"Bintang 3"}>
+                                        <option value="Bintang 3">
                                             Bintang 4
                                         </option>
-                                        <option value={"Bintang 5"}>
+                                        <option value="Bintang 5">
                                             Bintang 5
                                         </option>
                                     </>

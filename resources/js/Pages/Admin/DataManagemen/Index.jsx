@@ -74,17 +74,10 @@ export default function Index({ hotel, destinasi }) {
                 {/* Main Content */}
                 <main className="container mx-auto px-4 py-6 flex flex-col gap-8">
                     {/* Search and Add Button */}
-                    <div className="flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow">
-                        <input
-                            type="text"
-                            value={search}
-                            onChange={handleSearchChange}
-                            placeholder="Cari nama hotel atau destinasi..."
-                            className="w-1/3 p-2 text-gray-700 border rounded shadow"
-                        />
+                    <div className="flex  place-self-end w-full  bg-gray-800 p-4 rounded-lg shadow items-end justify-end">
                         <Link
                             href={route("admin.data-managemen.create")}
-                            className="bg-blue-600 px-4 py-2 rounded text-white shadow hover:bg-blue-700"
+                            className="bg-blue-600 px-4 py-2 rounded text-white shadow flex hover:bg-blue-700"
                         >
                             Tambah Data
                         </Link>

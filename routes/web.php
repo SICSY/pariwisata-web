@@ -8,6 +8,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\DestinasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DestinasiController as UserDestinasiController;
+use App\Http\Controllers\User\IndustriPariwisataController as UserIndustriPariwisataController;
 use App\Http\Controllers\User\IndustriPariwisataController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,8 @@ Route::get('/industri-pariwisata', [IndustriPariwisataController::class, 'index'
 Route::get('/industri-pariwisata/{industri}', [IndustriPariwisataController::class, 'show'])->name('user.industri.show');
 Route::get('/destinasi', [UserDestinasiController::class, 'index']);
 Route::get('/destinasi/{destinasi}', [UserDestinasiController::class, 'show'])->name('user.destinasi.show');
-
-Route::get('/profil', function () {
-    return Inertia::render('User/Profil');
-})->name('user.profil');
-
+Route::get('/industri', [UserIndustriPariwisataController::class, 'index']);
+Route::get('/industri/{industri}', [UserIndustriPariwisataController::class, 'show'])->name('user.industri.show');
 
 
 

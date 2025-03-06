@@ -34,14 +34,7 @@ const Footer = () => {
                                     Industri Pariwisata
                                 </Link>
                             </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="text-black/50 hover:text-white"
-                                >
-                                    Profil
-                                </a>
-                            </li>
+
                             <li>
                                 <a
                                     href="#"
@@ -59,7 +52,7 @@ const Footer = () => {
                             Email: support@example.com
                         </p>
                         <p className="text-sm text-black/50">
-                            Phone: +123 456 789
+                            Phone: +xxx xxx xxx
                         </p>
                         <div className="mt-4 flex space-x-4">
                             <a

@@ -19,7 +19,12 @@ export default function Hotel({ data }) {
         {
             header: "Gambar",
             id: "gambar",
-            accessorFn: (row) => <img src={`/storage/${row.gambar}`} />,
+            accessorFn: (row) => (
+                <img
+                    className="place-content-center w-20 h-20 flex place-self-center"
+                    src={`/storage/${row.gambar}`}
+                />
+            ),
         },
         {
             header: "Nama",
@@ -28,7 +33,7 @@ export default function Hotel({ data }) {
 
         {
             header: "Klasifikasi",
-            accessorKey: "klasifikasi_format",
+            accessorKey: "klasifikasi",
         },
         {
             header: "Kapasitas Kamar",

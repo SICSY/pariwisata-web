@@ -7,33 +7,31 @@ import Header from "@/Layouts/Header";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { useState, useEffect, useRef, Suspense } from "react";
 import Footer from "@/Components/Footer";
-import Section1 from "./User/partial/section1";
 import Spline from "@splinetool/react-spline";
 export default function Welcome({ auth }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isUserInteracting, setIsUserInteracting] = useState(false);
     const intervalRef = useRef(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
 
     const slides = [
         {
             id: 1,
-            content: "Slide 1: Keindahan Pariwisata",
-            background: "/foto/card/foto1.jpg",
-            link: "url",
+            content: " ",
+            background: "/foto/card/apita.jpg",
+            link: "Industri Pariwisata",
         },
         {
             id: 2,
-            content: "Slide 2: Warisan Budaya",
-            background: "/foto/card/foto2.jpg",
-            link: "warisan budaya dari leluhur",
+            content: "",
+            background: "/foto/card/foto4.jpg",
+            link: "Warisan Budaya",
         },
         {
             id: 3,
-            content: "Slide 3: Destinasi Menarik",
+            content: "",
             background: "/foto/card/foto3.jpg",
-            link: "sangat menarik untuk dikunjungi",
+            link: "Destinasi Menarik",
         },
     ];
 
@@ -121,7 +119,8 @@ export default function Welcome({ auth }) {
                                     }}
                                 >
                                     {slides.map((slide) => (
-                                        <div
+                                        <Link
+                                            href={slide.link}
                                             key={slide.id}
                                             className="w-full flex-shrink-0 flex items-center justify-center text-white text-2xl font-bold  "
                                             style={{
@@ -131,7 +130,7 @@ export default function Welcome({ auth }) {
                                             }}
                                         >
                                             {slide.content}
-                                        </div>
+                                        </Link>
                                     ))}
                                 </div>
 
@@ -298,17 +297,13 @@ export default function Welcome({ auth }) {
                         <p className="z-20">halo</p>
                     </div>
 
-                    <footer className="border w-full  absolute bottom-0 text-center h-fit">
+                    <footer className=" w-full  absolute bottom-0 text-center h-fit">
                         <div className="flex flex-wrap  w-full h-full p-2 container mx-auto gap-2   rounded-lg">
                             <h1 className="flex-[1]    text-left px-10  text-white/80 font-ubuntu  xl:text-6xl  rounded-lg">
                                 Temukan Keindahan Alam <span>& </span>
                                 <p className="text-2xl">
                                     Pariwisata Kabupaten Cirebon Disini
                                 </p>
-                            </h1>
-                            <h1 className="flex-[1] ">
-                                Temukan Keindahan Alam dan Pariwisata Indonesia
-                                Disini
                             </h1>
                         </div>
                     </footer>

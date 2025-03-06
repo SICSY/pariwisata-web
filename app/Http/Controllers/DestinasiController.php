@@ -11,20 +11,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class DestinasiController extends Controller
 {
-    public function index()
-    {
-        $destinasi = Destinasi::all();
 
-        return Inertia::render('Admin/Destinasi', ['destinasi' => $destinasi]);
-    }
-
-    public function show()
-    {
-        $destinasi = Destinasi::all();
-
-        return Inertia::render('Admin/DataManagemen/Index', ['destinasi' => $destinasi]);
-
-    }
     public function create()
     {
         $destinasi = Destinasi::paginate(10);
@@ -47,36 +34,38 @@ class DestinasiController extends Controller
                 ])
             ],
             'harga' => 'required|array',
+            'harga.min' => 'required|integer|min:0',
+            'harga.max' => 'required|integer|min:0|gte:harga.min',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lokasi' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
             'google_map' => 'nullable|url',
         ]);
-        $type = $request->type;
-        $harga = json_encode($request->harga, true);
+        $existingDestinasi = Destinasi::where('nama', $request->nama)->first();
+        if ($existingDestinasi) {
+            return redirect()->route('admin.data-managemen.create')->withErrors(['error' => 'Destinasi picture with the same name already exists.']);
+        }
+        if ($request->hasFile('gambar')) {
 
-
-        $reqgambar = $request->file('gambar');
-        $gambar = $reqgambar ? $gambar = $reqgambar->store('images/destinasi', 'public') : $gambar = null;
-
-
+            $gambarPath = $request->file('gambar')->store('images/destinasi', 'public');
+        } else {
+            $gambarPath = null;
+        }
 
         Destinasi::create([
             'nama' => $request->nama,
             'klasifikasi' => $request->klasifikasi,
-            'harga' => $harga,
-            'gambar' => $gambar,
+            'harga' => json_encode([
+                'min' => (int) $request->harga['min'],
+                'max' => (int) $request->harga['max']
+            ]),
+            'gambar' => $gambarPath,
             'lokasi' => $request->lokasi,
             'deskripsi' => $request->deskripsi,
             'google_map' => $request->google_map
 
         ]);
-
-        return redirect()->route('admin.data-managemen.index')->with([
-            'success' => 'Data Destinasi berhasil ditambahkan',
-            'error' => ' Data Destinasi gagal ditambahkan ',
-            'type' => $type
-        ]);
+        return redirect()->route('admin.data-managemen.index');
     }
 
 
@@ -96,7 +85,9 @@ class DestinasiController extends Controller
                 ])
             ],
             'gambar' => "nullable|image|mimes:jpeg,png,jpg,svg|max:2048",
-            'harga' => 'nullable|array',
+            'harga' => 'required|array',
+            'harga.min' => 'required|integer|min:0',
+            'harga.max' => 'required|integer|min:0|gte:harga.min',
             'lokasi' => 'nullable|string|max:255',
             'google_map' => 'nullable|string',
             'deskripsi' => 'nullable|string',
@@ -111,25 +102,19 @@ class DestinasiController extends Controller
 
             $gambar = $request->file('gambar')->store('images/destinasi', 'public');
         }
-
-
-        $harga = $request->has('harga') ? json_encode($request->harga, true) : $destinasi->harga;
-
-
         $destinasi->update([
             'nama' => $request->input('nama', $destinasi->nama),
             'klasifikasi' => $request->input('klasifikasi', $destinasi->klasifikasi),
             'gambar' => $gambar,
-            'harga' => $harga,
+            'harga' => json_encode([
+                'min' => (int) $request->harga['min'],
+                'max' => (int) $request->harga['max']
+            ]),
             'lokasi' => $request->input('lokasi', $destinasi->lokasi),
             'google_map' => $request->input('google_map', $destinasi->google_map),
             'deskripsi' => $request->input('deskripsi', $destinasi->deskripsi),
         ]);
-        return redirect()->route('admin.data-managemen.index')->with([
-            'type' => $request->type,
-            'success' => 'Data Destinasi berhasil diubah',
-            'error' => ' Data Destinasi gagal diubah ',
-        ]);
+        return redirect()->route('admin.data-managemen.index');
     }
 
     public function edit(Destinasi $destinasi)

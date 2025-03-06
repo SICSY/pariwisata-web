@@ -1,28 +1,28 @@
 import { Head } from "@inertiajs/react";
 import React from "react";
 
-const DestinasiDetail = ({ destinasi }) => {
-    const harga = JSON.parse(destinasi.harga);
-    console.log(harga);
+const IndustriDetail = ({ industri }) => {
+    const harga = JSON.parse(industri.harga);
+    console.log(industri);
 
     return (
         <div className="min-h-screen bg-slate-900 text-white py-10 px-5">
-            <Head title="Destinasi Detail"></Head>
+            <Head title="industri Detail"></Head>
             {/* Main Container */}
             <div className="max-w-5xl mx-auto bg-slate-800 rounded-lg shadow-lg overflow-hidden">
                 {/* Header Section */}
                 <div className="relative">
                     <img
                         src={
-                            `/storage/${destinasi.gambar}` ||
+                            `/storage/${industri.gambar}` ||
                             "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                         }
-                        alt={destinasi.nama}
+                        alt={industri.nama}
                         className="w-full h-72 object-cover"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <h1 className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg text-center">
-                            {destinasi.nama}
+                            {industri.nama}
                         </h1>
                     </div>
                 </div>
@@ -35,14 +35,14 @@ const DestinasiDetail = ({ destinasi }) => {
                         <div>
                             <h2 className="text-xl font-bold">Kategori</h2>
                             <p className="bg-blue-600 text-white px-4 py-2 rounded-full inline-block mt-2">
-        {destinasi.klasifikasi || "N/A"}
+                                {industri.klasifikasi || "N/A"}
                             </p>
                         </div>
                         {/* Lokasi */}
                         <div>
                             <h2 className="text-xl font-bold">Lokasi</h2>
                             <p className="mt-2 text-gray-300">
-                                {destinasi.lokasi || "Belum tersedia"}
+                                {industri.lokasi || "Belum tersedia"}
                             </p>
                         </div>
                     </div>
@@ -70,8 +70,8 @@ const DestinasiDetail = ({ destinasi }) => {
                     <div>
                         <h2 className="text-2xl font-bold">Deskripsi</h2>
                         <p className="mt-4 text-gray-300 leading-relaxed">
-                            {destinasi.deskripsi ||
-                                "Deskripsi belum tersedia untuk destinasi ini."}
+                            {industri.deskripsi ||
+                                "Deskripsi belum tersedia untuk industri ini."}
                         </p>
                     </div>
 
@@ -85,7 +85,7 @@ const DestinasiDetail = ({ destinasi }) => {
                                 Dibuat pada:{" "}
                                 <span className="font-semibold">
                                     {new Date(
-                                        destinasi.created_at
+                                        industri.created_at
                                     ).toLocaleDateString("id-ID")}
                                 </span>
                             </li>
@@ -93,20 +93,26 @@ const DestinasiDetail = ({ destinasi }) => {
                                 Diperbarui pada:{" "}
                                 <span className="font-semibold">
                                     {new Date(
-                                        destinasi.updated_at
+                                        industri.updated_at
                                     ).toLocaleDateString("id-ID")}
                                 </span>
                             </li>
                             <li>
                                 Lokasi Google Maps:{" "}
-                                <a
-                                    href={destinasi.google_map}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-500 hover:underline"
-                                >
-                                    Lihat di Google Maps
-                                </a>
+                                {industri.google_map ? (
+                                    <a
+                                        href={industri.google_map}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 hover:underline"
+                                    >
+                                        Lihat di Google Maps
+                                    </a>
+                                ) : (
+                                    <span className="line-through text-gray-500">
+                                        Belum tersedia
+                                    </span>
+                                )}
                             </li>
                         </ul>
                     </div>
@@ -116,4 +122,4 @@ const DestinasiDetail = ({ destinasi }) => {
     );
 };
 
-export default DestinasiDetail;
+export default IndustriDetail;

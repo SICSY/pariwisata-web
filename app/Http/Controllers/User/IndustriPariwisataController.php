@@ -15,8 +15,8 @@ class IndustriPariwisataController extends Controller
             'hotel' => Hotel::all(),
         ]);
     }
-    public function show(Hotel $hotel)
+    public function show(Hotel $industri)
     {
-        return inertia('User/IndustriPariwisata', ['hotel' => $hotel]);
+        return inertia('User/IndustriDetail', ['industri' => $industri]);
     }
 }

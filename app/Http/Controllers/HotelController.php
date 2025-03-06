@@ -20,45 +20,39 @@ class HotelController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'klasifikasi' => 'required|string|max:255',
+            'klasifikasi' => ['required', Rule::in(['Non Bintang', 'Bintang 1', 'Bintang 2', 'Bintang 3', 'Bintang 4', 'Bintang 5'])],
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kapasitas_kamar' => 'required|integer',
             'deskripsi' => 'required|string',
             'lokasi' => 'required|string',
+            'harga' => 'required|array',
+            'harga.min' => 'required|integer|min:0',
+            'harga.max' => 'required|integer|min:0|gte:harga.min',
 
         ]);
 
         $existingHotel = Hotel::where('nama', $request->nama)->first();
         if ($existingHotel) {
-            return redirect()->route('admin.data-managemen.create')->withErrors(['error' => 'Hotel with the same name already exists.']);
+            return redirect()->route('admin.data-managemen.create')->withErrors(['error' => 'Nama Hotel tidak boleh sama.']);
         }
-
-        $harga = json_encode($request->harga, true);
         if ($request->hasFile('gambar')) {
 
             $gambarPath = $request->file('gambar')->store('images/hotel', 'public');
         } else {
             $gambarPath = null;
         }
-        $hasil = Hotel::create([
+        Hotel::create([
             'nama' => $request->nama,
-            'klasifikasi' => [
-                'required',
-                Rule::in([
-                    'Non Bintang',
-                    'Bintang 1',
-                    'Bintang 2',
-                    'Bintang 3',
-                    'Bintang 4',
-                    'Bintang 5',
-                ])
-            ],
-            'harga' => $harga,
+            'klasifikasi' => $request->klasifikasi,
+            'harga' => json_encode([
+                'min' => (int) $request->harga['min'],
+                'max' => (int) $request->harga['max']
+            ]),
             'gambar' => $gambarPath,
             'deskripsi' => $request->deskripsi,
             'lokasi' => $request->lokasi,
             'google_map' => $request->google_map,
-            'kapasitas_kamar' => $request->kapasitas_kamar,
+            'kapasitas_kamar' => (int) $request->kapasitas_kamar,
 
         ]);
 
@@ -77,62 +71,49 @@ class HotelController extends Controller
         ]);
     }
 
-    public function update(Request $request, Hotel $hotel)
+    public function update(Request $request, $id)
     {
+        // Cari hotel berdasarkan ID
+        $hotel = Hotel::findOrFail($id);
 
-
+        // Validasi input
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'klasifikasi' => [
-                'required',
-                Rule::in([
-                    'Non Bintang',
-                    'Bintang 1',
-                    'Bintang 2',
-                    'Bintang 3',
-                    'Bintang 4',
-                    'Bintang 5',
-                ])
-            ],
-            'harga' => 'required|array',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nama' => ['required', 'string', Rule::unique('hotel', 'nama')->ignore($id)],
+            'klasifikasi' => ['required', Rule::in(['Non Bintang', 'Bintang 1', 'Bintang 2', 'Bintang 3', 'Bintang 4', 'Bintang 5'])],
+            'kapasitas_kamar' => 'required|integer|min:1',
             'deskripsi' => 'required|string',
             'lokasi' => 'required|string',
-            'kapasitas_kamar' => 'required|integer',
+            'harga' => 'required|array',
+            'harga.min' => 'required|integer|min:0',
+            'harga.max' => 'required|integer|min:0|gte:harga.min',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
 
-
-
         if ($request->hasFile('gambar')) {
-            $file = $request->file('gambar');
-            if ($hotel->gambar && Storage::disk('public')->exists($hotel->gambar)) {
+            if ($hotel->gambar) {
                 Storage::disk('public')->delete($hotel->gambar);
             }
+            $gambarPath = $request->file('gambar')->store('images/hotel', 'public');
+        } else {
 
-            $path = $file->store('images/hotel', 'public');
-            $hotel->gambar = $path;
+            $gambarPath = $hotel->gambar;
         }
-
-
-        $hotel->nama = $request->input('nama');
-        $hotel->klasifikasi = $request->klasifikasi;
-        $hotel->harga = $request->input('harga');
-        $hotel->deskripsi = $request->input('deskripsi');
-        $hotel->lokasi = $request->input('lokasi');
-        $hotel->kapasitas_kamar = $request->input('kapasitas_kamar');
-        $hotel->save();
-
-
-        // return redirect()->route('admin.data-managemen.index', $hotel->id)->with(['message', 'Hotel updated successfully', 'type' => $request->type]);
+        $hotel->update([
+            'nama' => $request->nama,
+            'klasifikasi' => $request->klasifikasi,
+            'kapasitas_kamar' => (int) $request->kapasitas_kamar,
+            'deskripsi' => $request->deskripsi,
+            'lokasi' => $request->lokasi,
+            'harga' => json_encode([
+                'min' => (int) $request->harga['min'],
+                'max' => (int) $request->harga['max']
+            ]),
+            'gambar' => $gambarPath,
+        ]);
         return to_route('admin.data-managemen.index')->with(['message' => 'Hotel updated successfully', 'type' => $request->type]);
     }
 
-    public function show(Hotel $hotel)
-    {
-
-        return redirect()->route('hotel.destroy', $hotel, );
-    }
 
     public function destroy($id)
     {

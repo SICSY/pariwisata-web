@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const Destinasi = ({ destinasi, auth }) => {
     let [idDestinasi, setidDestinasi] = useState("destinasi-destinasi");
-
+    console.log(destinasi);
     return (
         <main className="max-h-screen w-full ">
             <div className="min-h-full mx-auto max-w-screen-2xl  rounded-b-xl sticky top-0 z-50 backdrop-blur-xl backdrop-brightness-[0.5] border-white/20 border">
@@ -64,9 +64,9 @@ const Destinasi = ({ destinasi, auth }) => {
                         </div>
                     </nav>
                 </header>
-                <main className="flex  flex-col justify-between  w-full h-screen border-t-2 border-red-500  bg-black">
+                <main className="flex  flex-col justify-between  w-full h-full border-t-2 border-red-500  ">
                     {/* Section */}
-                    <section className="w-full py-8 ">
+                    <section className="w-full py-8  ">
                         <div className="container mx-auto text-white">
                             {/* Destinasi  Section */}
                             {idDestinasi === "destinasi-destinasi" && (
@@ -75,7 +75,7 @@ const Destinasi = ({ destinasi, auth }) => {
                                         {destinasi
                                             .filter(
                                                 (value) =>
-                                                    value.klasifikasi_format ===
+                                                    value.klasifikasi ===
                                                     "Destinasi"
                                             )
                                             .map((value, index) => (
@@ -121,7 +121,7 @@ const Destinasi = ({ destinasi, auth }) => {
                                         {destinasi
                                             .filter(
                                                 (value) =>
-                                                    value.klasifikasi_format ===
+                                                    value.klasifikasi ===
                                                     "Destinasi & Water Boom"
                                             )
                                             .map(
@@ -171,8 +171,7 @@ const Destinasi = ({ destinasi, auth }) => {
                                         {destinasi
                                             .filter(
                                                 (value) =>
-                                                    value.klasifikasi_format ===
-                                                    "Alam"
+                                                    value.klasifikasi === "Alam"
                                             )
                                             .map((value, index) => (
                                                 <Card
@@ -214,7 +213,7 @@ const Destinasi = ({ destinasi, auth }) => {
                                         {destinasi
                                             .filter(
                                                 (value) =>
-                                                    value.klasifikasi_format ===
+                                                    value.klasifikasi ===
                                                     "Budaya"
                                             )
                                             .map((value, index) => (
@@ -251,8 +250,6 @@ const Destinasi = ({ destinasi, auth }) => {
                             )}
                         </div>
                     </section>
-
-                    <Footer></Footer>
                 </main>
             </div>
         </main>

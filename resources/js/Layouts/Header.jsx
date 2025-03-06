@@ -33,13 +33,6 @@ const Header = ({ auth }) => {
                                 Industri Pariwisata
                             </Link>
 
-                            <Link
-                                href="/profil"
-                                className="text-white hover:text-blue-600 rounded-xl  p-2 shadow-xl border-transparent "
-                            >
-                                Profil
-                            </Link>
-
                             {auth?.user ? (
                                 <Link
                                     href={
@@ -94,12 +87,7 @@ const Header = ({ auth }) => {
                             >
                                 Industri Pariwisata
                             </Link>
-                            <Link
-                                href="/profil"
-                                className="block text-white hover:text-blue-600 border-b p-2"
-                            >
-                                Profil
-                            </Link>
+
                             <Link
                                 href="/about"
                                 className="block text-white hover:text-blue-600 border-b p-2"
